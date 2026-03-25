@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Recipe Box</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════ HERO ═══════════════════════ -->
+  <header class="hero">
+
+    <!-- Floating decorative food emojis -->
+    <div class="hero-floats" aria-hidden="true">
+      <span class="float">🍗</span>
+      <span class="float">🥕</span>
+      <span class="float">🍋</span>
+      <span class="float">🌿</span>
+      <span class="float">🧅</span>
+      <span class="float">🫙</span>
+      <span class="float">🌶️</span>
+      <span class="float">🍳</span>
+    </div>
+
+    <nav class="nav">
+      <div class="logo">The Recipe <span>Box</span></div>
+      <div class="nav-links">
+        <button class="nav-link" id="nav-ingredients">Find by Ingredients</button>
+        <button class="nav-link" id="nav-meal">Browse by Meal</button>
+      </div>
+    </nav>
+
+    <div class="hero-body">
+      <div class="hero-eyebrow">✦ Your personal kitchen companion</div>
+      <h1 class="hero-title">
+        Cook Something<br><span class="accent">Delicious Tonight</span>
+      </h1>
+      <p class="hero-subtitle">
+        Search by the ingredients you already have, or browse by meal type.
+        Every recipe is one click away.
+      </p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" id="btn-ingredients">
+          🥕&nbsp; Find by Ingredients
+        </button>
+        <button class="btn btn-secondary" id="btn-meal-type">
+          🍽️&nbsp; Browse by Meal
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat"><span id="stat-recipes">3</span><label>Recipes</label></div>
+      <div class="stat"><span id="stat-meals">2</span><label>Meal Types</label></div>
+      <div class="stat"><span>∞</span><label>Possibilities</label></div>
+    </div>
+
+  </header>
+
+  <!-- ═══════════════════════ APP ═══════════════════════ -->
+  <main class="app" id="app">
+    <div class="container">
+
+      <!-- ── Mode Selector ── -->
+      <section class="mode-selector" id="mode-selector">
+        <p class="section-sub" style="text-align:center;padding-top:60px;font-size:1.1rem;color:var(--text-muted)">
+          How would you like to find a recipe?
+        </p>
+        <div class="mode-cards">
+
+          <div class="mode-card" id="card-ingredients">
+            <div class="mode-icon">🥕</div>
+            <h3>I have ingredients</h3>
+            <p>Tell us what's in your pantry and fridge — we'll match you with recipes that fit.</p>
+            <span class="arrow">Get started →</span>
+          </div>
+
+          <div class="mode-card" id="card-meal">
+            <div class="mode-icon">🍽️</div>
+            <h3>Browse by meal type</h3>
+            <p>Looking for something specific for breakfast, lunch, or dinner? Start here.</p>
+            <span class="arrow">Explore recipes →</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── Ingredient Finder ── -->
+      <section class="finder hidden" id="ingredient-finder">
+        <div class="section-header">
+          <button class="back-btn" id="back-from-ingredients">← Back</button>
+          <h2>What's in your kitchen?</h2>
+          <p>Select the ingredients you have on hand and we'll find matching recipes.</p>
+        </div>
+
+        <!-- Chips injected here by app.js -->
+        <div id="ingredient-grid"></div>
+
+        <!-- Results injected here -->
+        <div class="results-header hidden" id="results-header"></div>
+        <div class="recipe-grid" id="ingredient-results"></div>
+      </section>
+
+      <!-- ── Meal Browser ── -->
+      <section class="browser hidden" id="meal-browser">
+        <div class="section-header">
+          <button class="back-btn" id="back-from-meals">← Back</button>
+          <h2>Browse by Meal Type</h2>
+          <p>Choose a meal setting to explore all matching recipes.</p>
+        </div>
+
+        <div class="meal-tabs" id="meal-tabs">
+          <button class="meal-tab active" data-meal="all">All recipes</button>
+          <button class="meal-tab" data-meal="breakfast">🌅 Breakfast</button>
+          <button class="meal-tab" data-meal="lunch">☀️ Lunch</button>
+          <button class="meal-tab" data-meal="dinner">🌙 Dinner</button>
+        </div>
+
+        <div class="recipe-grid" id="meal-results"></div>
+      </section>
+
+    </div><!-- /container -->
+  </main>
+
+  <footer>
+    Made with ❤️ — <strong>The Recipe Box</strong>
+    &nbsp;·&nbsp; Add new recipes by editing <code>js/recipes.js</code>
+  </footer>
+
+  <!-- ═══════════════════════ MODAL ═══════════════════════ -->
+  <div class="modal-overlay hidden" id="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal" id="recipe-modal">
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="js/recipes.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

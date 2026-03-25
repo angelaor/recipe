@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(file *)",
+      "Bash(pandoc \"Chicken Fricassee.docx\" -t plain)",
+      "Bash(pandoc \"Ultimate Ground Turkey Meatloaf Recip1.docx\" -t plain)",
+      "Bash(python3 -c \"import zipfile; z = zipfile.ZipFile\\(''Chicken Fricassee.docx''\\); print\\(z.read\\(''word/document.xml''\\).decode\\(''utf-8''\\)\\)\")",
+      "Bash(python3 -c \"import zipfile; z = zipfile.ZipFile\\(''Ultimate Ground Turkey Meatloaf Recip1.docx''\\); print\\(z.read\\(''word/document.xml''\\).decode\\(''utf-8''\\)\\)\")",
+      "Bash(strings \"Core Recipe Mexican Lime  Chicken Soup \\(CaldoStyle\\).msg\")",
+      "Bash(python3:*)",
+      "WebSearch",
+      "WebFetch(domain:www.foodnetwork.com)"
+    ]
+  }
+}
