@@ -1409,4 +1409,40 @@ const RECIPES = [
     ],
   },
 
+  {
+    id: "dark-cocoa-orange-olive-oil-cake",
+    name: "Dark Cocoa–Orange Olive Oil Cake",
+    emoji: "🍫",
+    mealTypes: ["dessert"],
+    tags: ["dessert", "baking", "chocolate", "vegetarian"],
+    time: "45 min",
+    calories: 310,
+    servings: 8,
+    rating: 4.9,
+    description:
+      "A deeply chocolatey, impossibly moist olive oil cake with bright citrus running through every bite. No mixer needed — just two bowls and 35 minutes in the oven.",
+    ingredients: [
+      { name: "all-purpose flour",  amount: "1¼ cups" },
+      { name: "dark cocoa powder",  amount: "¼ cup" },
+      { name: "sugar",              amount: "1 cup" },
+      { name: "baking soda",        amount: "½ tsp" },
+      { name: "baking powder",      amount: "½ tsp" },
+      { name: "salt",               amount: "½ tsp" },
+      { name: "egg",                amount: "2 large" },
+      { name: "olive oil",          amount: "½ cup (use a good one)" },
+      { name: "orange zest",        amount: "zest of 2 oranges" },
+      { name: "orange juice",       amount: "½ cup, freshly squeezed" },
+      { name: "plain yogurt",       amount: "½ cup (or sour cream)" },
+      { name: "vanilla extract",    amount: "1 tsp" },
+    ],
+    instructions: [
+      "Preheat oven to 350°F. Grease an 8-inch round cake pan and line the bottom with parchment.",
+      "Whisk together flour, dark cocoa powder, sugar, baking soda, baking powder, and salt in a large bowl.",
+      "In a separate bowl, whisk eggs, olive oil, yogurt, orange zest, orange juice, and vanilla until completely smooth.",
+      "Pour the wet mixture into the dry ingredients and stir gently until just combined — do not overmix.",
+      "Pour batter into the prepared pan. Bake 30–35 minutes, until the centre springs back when lightly pressed and a toothpick comes out with just a few moist crumbs.",
+      "Cool in the pan 10 minutes, then turn out onto a rack. Dust with cocoa powder or powdered sugar to serve. Top with thin orange slices or a drizzle of melted dark chocolate for a more dramatic finish.",
+    ],
+  },
+
 ];
