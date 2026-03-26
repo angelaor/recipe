@@ -12,18 +12,18 @@ let currentMode         = null;
 // ingKeys must match normalised ingredient names used in recipes.js
 const MAINS = [
   { key: "chicken",    label: "Chicken",     emoji: "🍗", ingKeys: ["chicken thighs", "chicken legs", "chicken breast"] },
-  { key: "beef",       label: "Beef",        emoji: "🥩", ingKeys: ["ground beef", "flank steak"] },
-  { key: "turkey",     label: "Turkey",      emoji: "🦃", ingKeys: ["ground turkey"] },
-  { key: "pork",       label: "Pork",        emoji: "🐷", ingKeys: ["pork chops"] },
+  { key: "beef",       label: "Beef",        emoji: "🥩", ingKeys: ["ground beef", "flank steak", "beef chuck", "ribeye steak", "beef bones"] },
+  { key: "turkey",     label: "Turkey",      emoji: "🦃", ingKeys: ["ground turkey", "cooked turkey breast"] },
+  { key: "pork",       label: "Pork",        emoji: "🐷", ingKeys: ["pork chops", "ground pork"] },
   { key: "shrimp",     label: "Shrimp",      emoji: "🦐", ingKeys: ["shrimp"] },
   { key: "salmon",     label: "Salmon",      emoji: "🐟", ingKeys: ["salmon fillets"] },
   { key: "eggs",       label: "Eggs",        emoji: "🥚", ingKeys: ["egg"] },
   { key: "pasta",      label: "Pasta",       emoji: "🍝", ingKeys: ["pasta", "spaghetti", "linguine"] },
-  { key: "rice",       label: "Rice",        emoji: "🍚", ingKeys: ["arborio rice"] },
+  { key: "rice",       label: "Rice",        emoji: "🍚", ingKeys: ["arborio rice", "white rice"] },
   { key: "oats",       label: "Oats",        emoji: "🥣", ingKeys: ["rolled oats"] },
   { key: "avocado",    label: "Avocado",     emoji: "🥑", ingKeys: ["avocado"] },
   { key: "blackbeans", label: "Black Beans", emoji: "🫘", ingKeys: ["black beans"] },
-  { key: "tomatoes",   label: "Tomatoes",    emoji: "🍅", ingKeys: ["tomatoes", "canned crushed tomatoes"] },
+  { key: "tomatoes",   label: "Tomatoes",    emoji: "🍅", ingKeys: ["tomatoes"] },
 ];
 
 // ── DOM helpers ──
@@ -39,11 +39,21 @@ function normalise(str) {
 // ── Auto-categorise an ingredient name for the extras groups ──
 function categorise(name) {
   const n = normalise(name);
-  if (/(onion|garlic|carrot|celery|tomato|pepper|mushroom|avocado|jalap|lime|lemon|basil|cilantro|parsley|dill|chive|ginger|spinach|cabbage|sprout|cucumber|romaine|lettuce|olive|fresh herb)/.test(n))
+  // Proteins — checked first to avoid false matches
+  if (n === "egg" ||
+      /(chicken breast|chicken thigh|chicken leg|ground turkey|cooked turkey breast|ground beef|flank steak|beef chuck|ribeye|beef bones|pork chop|ground pork|shrimp|salmon fillet|pancetta|guanciale|tuna)/.test(n))
+    return "Proteins";
+  // Grains & Starches
+  if (/(pasta|spaghetti|linguine|fettuccine|penne|rigatoni|noodle|tortilla|arborio|breadcrumb|crouton|orzo|panko|white rice|jasmine rice|cooked rice|flour|oat|sourdough|\bbread\b)/.test(n))
+    return "Grains & Starches";
+  // Vegetables & Fresh Herbs (use "kalamata" not "olive" so olive oil falls to Pantry)
+  if (/(onion|garlic|carrot|celery|tomato|bell pepper|mushroom|avocado|jalap|lime|lemon|basil|cilantro|parsley|dill|chive|ginger|spinach|cabbage|zucchini|potato|cucumber|romaine|lettuce|kalamata|scallion|green onion|\bpeas?\b|sprout)/.test(n))
     return "Vegetables & Fresh Herbs";
+  // Dairy
   if (/(cream|butter|milk|yogurt|cheese|mozzarella|sour cream|buttermilk|pecorino)/.test(n))
     return "Dairy";
-  if (/(thyme|oregano|paprika|cumin|chili|cinnamon|salt|pepper|bay leaf|vanilla|red pepper flake|chia|rosemary|clove|garam|turmeric|cayenne|baking powder|baking soda)/.test(n))
+  // Herbs & Spices
+  if (/(thyme|oregano|paprika|cumin|chili|cinnamon|\bsalt\b|pepper|bay leaf|vanilla|red pepper flake|chia|rosemary|clove|garam|turmeric|cayenne|baking powder|baking soda|sesame|fish sauce|soy sauce|oyster sauce|dried)/.test(n))
     return "Herbs & Spices";
   return "Pantry & Oils";
 }
