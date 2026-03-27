@@ -415,31 +415,108 @@ function noResultsHTML(icon, title, msg) {
   `;
 }
 
+// ══════════════════════════════════════════════════
+//  SERVINGS SCALER UTILITIES
+// ══════════════════════════════════════════════════
+
+const UNICODE_FRACS = {
+  '½': 1/2, '⅓': 1/3, '⅔': 2/3,
+  '¼': 1/4, '¾': 3/4,
+  '⅛': 1/8, '⅜': 3/8, '⅝': 5/8, '⅞': 7/8,
+  '⅙': 1/6, '⅚': 5/6,
+};
+
+// Parse the leading numeric value from an amount string ("1½ cups" → 1.5, "cups")
+function parseLeadingNumber(raw) {
+  let s = raw.trim();
+  let value = 0;
+  let found = false;
+
+  // Leading integer or decimal
+  const numMatch = s.match(/^(\d+(?:\.\d+)?)/);
+  if (numMatch) {
+    value = parseFloat(numMatch[1]);
+    s = s.slice(numMatch[1].length).trim();
+    found = true;
+  }
+
+  // Attached or standalone unicode fraction  ("1½" or "½")
+  for (const [frac, val] of Object.entries(UNICODE_FRACS)) {
+    if (s.startsWith(frac)) {
+      value += val;
+      s = s.slice(frac.length).trim();
+      found = true;
+      break;
+    }
+  }
+
+  return found ? { value, rest: s } : null;
+}
+
+// Convert a decimal to the nearest clean fraction string ("1.5" → "1½")
+function toNiceFraction(n) {
+  if (n <= 0) return '0';
+  // Snap to nearest 8th for clean fractions
+  const snapped = Math.round(n * 8) / 8;
+  const whole   = Math.floor(snapped);
+  const frac8   = Math.round((snapped - whole) * 8);
+  const FRAC8   = ['', '⅛', '¼', '⅜', '½', '⅝', '¾', '⅞'];
+  if (frac8 >= 8) return String(whole + 1);
+  const fracStr = FRAC8[frac8];
+  if (whole === 0) return fracStr || '0';
+  return fracStr ? `${whole}${fracStr}` : String(whole);
+}
+
+// Scale a raw amount string by a ratio ("¾ cup" × 2 → "1½ cup")
+function scaleAmount(amountStr, scale) {
+  if (scale === 1) return amountStr;
+  const parsed = parseLeadingNumber(amountStr);
+  if (!parsed || parsed.value === 0) return amountStr; // "to taste", "for serving", etc.
+  const scaled = parsed.value * scale;
+  return toNiceFraction(scaled) + (parsed.rest ? ' ' + parsed.rest : '');
+}
+
+// ── Active modal state ──
+let activeRecipeId  = null;
+let activeServings  = 4;
+
+const MODAL_GRADIENTS = [
+  "linear-gradient(135deg,#3d1a08,#7a3010)",
+  "linear-gradient(135deg,#0f2710,#1e5224)",
+  "linear-gradient(135deg,#0d1f3a,#1a3d5c)",
+  "linear-gradient(135deg,#2d0a2e,#5c1a5e)",
+  "linear-gradient(135deg,#2a1a00,#5a3c00)",
+  "linear-gradient(135deg,#0a1f2a,#12404f)",
+  "linear-gradient(135deg,#1a1000,#3d2800)",
+  "linear-gradient(135deg,#001a10,#003d20)",
+];
+
 // ── Modal ──
 function openModal(recipeId) {
-  const recipe = RECIPES.find(r => r.id === recipeId);
+  activeRecipeId = recipeId;
+  activeServings = 4; // always default to 4
+  renderModal();
+  show($("modal-overlay"));
+  document.body.style.overflow = "hidden";
+}
+
+function renderModal() {
+  const recipe = RECIPES.find(r => r.id === activeRecipeId);
   if (!recipe) return;
 
+  const scale      = activeServings / recipe.servings;
   const colorIndex = RECIPES.indexOf(recipe) % 8;
-  const gradients = [
-    "linear-gradient(135deg,#3d1a08,#7a3010)",
-    "linear-gradient(135deg,#0f2710,#1e5224)",
-    "linear-gradient(135deg,#0d1f3a,#1a3d5c)",
-    "linear-gradient(135deg,#2d0a2e,#5c1a5e)",
-    "linear-gradient(135deg,#2a1a00,#5a3c00)",
-    "linear-gradient(135deg,#0a1f2a,#12404f)",
-    "linear-gradient(135deg,#1a1000,#3d2800)",
-    "linear-gradient(135deg,#001a10,#003d20)",
-  ];
 
+  // Scaled ingredients
   const ingredientsHTML = recipe.ingredients.map(ing => {
-    const matched = selectedIngredients.has(normalise(ing.name));
+    const matched      = selectedIngredients.has(normalise(ing.name));
+    const scaledAmount = scaleAmount(ing.amount, scale);
     return `
       <div class="ingredient-item${matched ? " matched" : ""}">
         <span class="dot"></span>
         <div>
           <div>${ing.name}</div>
-          <div class="ing-amount">${ing.amount}</div>
+          <div class="ing-amount">${scaledAmount}</div>
         </div>
       </div>
     `;
@@ -452,24 +529,41 @@ function openModal(recipeId) {
     </li>
   `).join("");
 
+  // Serving selector — highlight whichever matches activeServings
+  const servingBtnsHTML = [2, 4, 6, 8].map(n => `
+    <button class="serving-btn${n === activeServings ? " active" : ""}"
+            data-s="${n}">${n}</button>
+  `).join("");
+
+  // Scaled calories per serving
+  const calPerServing = Math.round(recipe.calories * (recipe.servings / activeServings) === recipe.calories
+    ? recipe.calories
+    : recipe.calories * recipe.servings / activeServings);
+
   $("modal-content").innerHTML = `
     <div class="modal-hero">
-      <div class="modal-bg" style="background:${gradients[colorIndex]}"></div>
+      <div class="modal-bg" style="background:${MODAL_GRADIENTS[colorIndex]}"></div>
       <span style="position:relative;z-index:1;font-size:7rem;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5))">${recipe.emoji}</span>
     </div>
     <div class="modal-body">
       <div class="modal-tags">
         ${recipe.mealTypes.map(m => `<span class="modal-tag">${m}</span>`).join("")}
-        ${recipe.tags.map(t => `<span class="modal-tag">${t}</span>`).join("")}
+        ${recipe.tags.map(t  => `<span class="modal-tag">${t}</span>`).join("")}
       </div>
       <div class="modal-name">${recipe.name}</div>
       <div class="modal-desc">${recipe.description}</div>
       <div class="modal-meta">
         <div class="modal-meta-item"><span class="value">${recipe.time}</span><span class="label">Total Time</span></div>
-        <div class="modal-meta-item"><span class="value">${recipe.calories}</span><span class="label">Calories</span></div>
-        <div class="modal-meta-item"><span class="value">${recipe.servings}</span><span class="label">Servings</span></div>
+        <div class="modal-meta-item"><span class="value">${calPerServing}</span><span class="label">Cal / Serving</span></div>
         <div class="modal-meta-item"><span class="value">⭐ ${recipe.rating}</span><span class="label">Rating</span></div>
       </div>
+
+      <div class="serving-selector">
+        <span class="serving-selector-label">Servings</span>
+        ${servingBtnsHTML}
+        <span class="serving-note">Amounts adjust automatically</span>
+      </div>
+
       <div class="modal-section-title">Ingredients</div>
       <div class="ingredients-list">${ingredientsHTML}</div>
       <div class="modal-section-title">Instructions</div>
@@ -477,8 +571,15 @@ function openModal(recipeId) {
     </div>
   `;
 
-  show($("modal-overlay"));
-  document.body.style.overflow = "hidden";
+  // Serving button clicks
+  $("modal-content").querySelectorAll(".serving-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      activeServings = parseInt(btn.dataset.s);
+      renderModal(); // re-render with new scale
+      // Restore scroll position to ingredients
+      btn.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
 }
 
 function closeModal() {
@@ -494,8 +595,30 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") closeModal();
 });
 
-// ── Init: update hero stat counters ──
+// ══════════════════════════════════════════════════
+//  FONT SIZE ACCESSIBILITY
+// ══════════════════════════════════════════════════
+
+function applyFontSize(size) {
+  document.documentElement.classList.remove("text-md", "text-lg");
+  if (size === "md") document.documentElement.classList.add("text-md");
+  if (size === "lg") document.documentElement.classList.add("text-lg");
+  document.querySelectorAll(".font-sz-btn").forEach(btn =>
+    btn.classList.toggle("active", btn.dataset.size === size)
+  );
+  localStorage.setItem("recipebox-fontsize", size);
+}
+
+document.querySelectorAll(".font-sz-btn").forEach(btn => {
+  btn.addEventListener("click", () => applyFontSize(btn.dataset.size));
+});
+
+// ── Init ──
 document.addEventListener("DOMContentLoaded", () => {
+  // Restore saved font size
+  applyFontSize(localStorage.getItem("recipebox-fontsize") || "normal");
+
+  // Update hero stat counters
   const statEls = document.querySelectorAll(".stat span");
   if (statEls[0]) statEls[0].textContent = RECIPES.length;
   const mealSet = new Set(RECIPES.flatMap(r => r.mealTypes));
