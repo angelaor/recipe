@@ -9,7 +9,8 @@
       "Bash(strings \"Core Recipe Mexican Lime  Chicken Soup \\(CaldoStyle\\).msg\")",
       "Bash(python3:*)",
       "WebSearch",
-      "WebFetch(domain:www.foodnetwork.com)"
+      "WebFetch(domain:www.foodnetwork.com)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }
