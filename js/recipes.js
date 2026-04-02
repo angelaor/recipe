@@ -19,6 +19,7 @@ const RECIPES = [
     tags: ["no-cook", "meal-prep", "healthy", "vegetarian"],
     time: "5 min + chill",
     calories: 300,
+    nutrition: { protein: 11, carbs: 47, fat: 7, fiber: 6 },
     servings: 1,
     rating: 4.7,
     description:
@@ -48,6 +49,7 @@ const RECIPES = [
     tags: ["quick", "healthy", "vegetarian", "eggs"],
     time: "10 min",
     calories: 290,
+    nutrition: { protein: 13, carbs: 24, fat: 18, fiber: 7 },
     servings: 1,
     rating: 4.8,
     description:
@@ -79,6 +81,7 @@ const RECIPES = [
     tags: ["mediterranean", "vegetarian", "eggs", "spiced"],
     time: "30 min",
     calories: 250,
+    nutrition: { protein: 14, carbs: 16, fat: 15, fiber: 3 },
     servings: 3,
     rating: 4.9,
     description:
@@ -116,6 +119,7 @@ const RECIPES = [
     tags: ["american", "vegetarian", "fluffy", "classic"],
     time: "25 min",
     calories: 340,
+    nutrition: { protein: 9, carbs: 54, fat: 10, fiber: 1 },
     servings: 4,
     rating: 4.8,
     description:
@@ -150,6 +154,7 @@ const RECIPES = [
     tags: ["mexican", "eggs", "hearty", "spicy"],
     time: "25 min",
     calories: 420,
+    nutrition: { protein: 22, carbs: 38, fat: 21, fiber: 9 },
     servings: 2,
     rating: 4.7,
     description:
@@ -192,6 +197,7 @@ const RECIPES = [
     tags: ["italian", "no-cook", "vegetarian", "salad"],
     time: "5 min",
     calories: 258,
+    nutrition: { protein: 11, carbs: 6, fat: 22, fiber: 1 },
     servings: 4,
     rating: 4.7,
     description:
@@ -222,6 +228,7 @@ const RECIPES = [
     tags: ["mediterranean", "greek", "no-cook", "vegetarian"],
     time: "10 min",
     calories: 220,
+    nutrition: { protein: 6, carbs: 9, fat: 18, fiber: 2 },
     servings: 4,
     rating: 4.7,
     description:
@@ -255,6 +262,7 @@ const RECIPES = [
     tags: ["vegetarian", "soup", "creamy", "comfort food"],
     time: "35 min",
     calories: 185,
+    nutrition: { protein: 4, carbs: 20, fat: 10, fiber: 3 },
     servings: 4,
     rating: 4.8,
     description:
@@ -291,6 +299,7 @@ const RECIPES = [
     tags: ["chicken", "salad", "classic", "american"],
     time: "25 min",
     calories: 380,
+    nutrition: { protein: 38, carbs: 20, fat: 18, fiber: 2 },
     servings: 4,
     rating: 4.8,
     description:
@@ -330,6 +339,7 @@ const RECIPES = [
     tags: ["french", "chicken", "creamy", "comfort food"],
     time: "1h 10m",
     calories: 610,
+    nutrition: { protein: 48, carbs: 8, fat: 42, fiber: 1 },
     servings: 6,
     rating: 5.0,
     description:
@@ -370,6 +380,7 @@ const RECIPES = [
     tags: ["turkey", "baked", "american", "healthy"],
     time: "1h 5m",
     calories: 340,
+    nutrition: { protein: 34, carbs: 20, fat: 12, fiber: 2 },
     servings: 6,
     rating: 4.8,
     description:
@@ -415,6 +426,7 @@ const RECIPES = [
     tags: ["mexican", "soup", "chicken", "citrus"],
     time: "45 min",
     calories: 280,
+    nutrition: { protein: 28, carbs: 14, fat: 9, fiber: 3 },
     servings: 4,
     rating: 4.9,
     description:
@@ -454,6 +466,7 @@ const RECIPES = [
     tags: ["vegetarian", "mexican", "quick", "tacos"],
     time: "25 min",
     calories: 360,
+    nutrition: { protein: 12, carbs: 52, fat: 12, fiber: 12 },
     servings: 5,
     rating: 4.7,
     description:
@@ -492,6 +505,7 @@ const RECIPES = [
     tags: ["salmon", "healthy", "quick", "gluten-free"],
     time: "25 min",
     calories: 228,
+    nutrition: { protein: 34, carbs: 2, fat: 10, fiber: 0 },
     servings: 4,
     rating: 4.9,
     description:
@@ -524,6 +538,7 @@ const RECIPES = [
     tags: ["italian", "pasta", "classic", "quick"],
     time: "25 min",
     calories: 520,
+    nutrition: { protein: 24, carbs: 65, fat: 20, fiber: 2 },
     servings: 4,
     rating: 4.9,
     description:
@@ -556,6 +571,7 @@ const RECIPES = [
     tags: ["mexican", "beef", "quick", "family-friendly"],
     time: "25 min",
     calories: 340,
+    nutrition: { protein: 24, carbs: 26, fat: 15, fiber: 5 },
     servings: 4,
     rating: 4.7,
     description:
@@ -595,6 +611,7 @@ const RECIPES = [
     tags: ["indian", "chicken", "creamy", "curry"],
     time: "45 min",
     calories: 420,
+    nutrition: { protein: 36, carbs: 12, fat: 26, fiber: 2 },
     servings: 4,
     rating: 4.9,
     description:
@@ -635,6 +652,7 @@ const RECIPES = [
     tags: ["shrimp", "pasta", "seafood", "quick"],
     time: "25 min",
     calories: 480,
+    nutrition: { protein: 32, carbs: 52, fat: 16, fiber: 2 },
     servings: 4,
     rating: 4.8,
     description:
@@ -671,6 +689,7 @@ const RECIPES = [
     tags: ["italian", "beef", "pasta", "slow-cooked"],
     time: "1h 30m",
     calories: 490,
+    nutrition: { protein: 28, carbs: 60, fat: 14, fiber: 4 },
     servings: 6,
     rating: 4.9,
     description:
@@ -712,6 +731,7 @@ const RECIPES = [
     tags: ["pork", "quick", "american", "pan-seared"],
     time: "20 min",
     calories: 320,
+    nutrition: { protein: 30, carbs: 2, fat: 21, fiber: 0 },
     servings: 4,
     rating: 4.7,
     description:
@@ -745,6 +765,7 @@ const RECIPES = [
     tags: ["chicken", "roasted", "easy", "weeknight"],
     time: "50 min",
     calories: 380,
+    nutrition: { protein: 42, carbs: 4, fat: 22, fiber: 1 },
     servings: 4,
     rating: 4.8,
     description:
@@ -778,6 +799,7 @@ const RECIPES = [
     tags: ["vegetarian", "italian", "creamy", "comfort food"],
     time: "45 min",
     calories: 420,
+    nutrition: { protein: 14, carbs: 56, fat: 16, fiber: 3 },
     servings: 4,
     rating: 4.8,
     description:
@@ -817,6 +839,7 @@ const RECIPES = [
     tags: ["mexican", "beef", "quick", "sheet-pan"],
     time: "35 min",
     calories: 380,
+    nutrition: { protein: 32, carbs: 30, fat: 16, fiber: 4 },
     servings: 4,
     rating: 4.7,
     description:
@@ -862,6 +885,7 @@ const RECIPES = [
     tags: ["shrimp", "mexican", "quick", "seafood"],
     time: "25 min",
     calories: 320,
+    nutrition: { protein: 24, carbs: 34, fat: 10, fiber: 5 },
     servings: 4,
     rating: 4.8,
     description:
@@ -899,6 +923,7 @@ const RECIPES = [
     tags: ["salmon", "japanese", "healthy", "quick"],
     time: "20 min",
     calories: 340,
+    nutrition: { protein: 36, carbs: 14, fat: 14, fiber: 0 },
     servings: 4,
     rating: 4.9,
     description:
@@ -933,6 +958,7 @@ const RECIPES = [
     tags: ["vegetarian", "pasta", "italian", "spring"],
     time: "30 min",
     calories: 410,
+    nutrition: { protein: 14, carbs: 58, fat: 16, fiber: 5 },
     servings: 4,
     rating: 4.6,
     description:
@@ -968,6 +994,7 @@ const RECIPES = [
     tags: ["beef", "comfort food", "slow-cooked", "hearty"],
     time: "2h 30m",
     calories: 480,
+    nutrition: { protein: 36, carbs: 28, fat: 20, fiber: 4 },
     servings: 6,
     rating: 4.9,
     description:
@@ -1010,6 +1037,7 @@ const RECIPES = [
     tags: ["greek", "chicken", "soup", "comforting"],
     time: "40 min",
     calories: 310,
+    nutrition: { protein: 30, carbs: 22, fat: 10, fiber: 1 },
     servings: 4,
     rating: 4.8,
     description:
@@ -1045,6 +1073,7 @@ const RECIPES = [
     tags: ["italian", "pasta", "minimalist", "vegetarian"],
     time: "20 min",
     calories: 490,
+    nutrition: { protein: 18, carbs: 68, fat: 18, fiber: 2 },
     servings: 4,
     rating: 4.9,
     description:
@@ -1075,6 +1104,7 @@ const RECIPES = [
     tags: ["thai", "beef", "quick", "spicy"],
     time: "20 min",
     calories: 380,
+    nutrition: { protein: 32, carbs: 10, fat: 24, fiber: 2 },
     servings: 4,
     rating: 4.8,
     description:
@@ -1114,6 +1144,7 @@ const RECIPES = [
     tags: ["shrimp", "asian", "quick", "rice"],
     time: "20 min",
     calories: 400,
+    nutrition: { protein: 28, carbs: 48, fat: 10, fiber: 2 },
     servings: 4,
     rating: 4.7,
     description:
@@ -1148,6 +1179,7 @@ const RECIPES = [
     tags: ["chicken", "mexican", "quick", "family-friendly"],
     time: "25 min",
     calories: 490,
+    nutrition: { protein: 44, carbs: 38, fat: 20, fiber: 2 },
     servings: 4,
     rating: 4.7,
     description:
@@ -1185,6 +1217,7 @@ const RECIPES = [
     tags: ["eggs", "vegetarian", "quick", "healthy"],
     time: "12 min",
     calories: 280,
+    nutrition: { protein: 20, carbs: 6, fat: 20, fiber: 1 },
     servings: 1,
     rating: 4.7,
     description:
@@ -1222,6 +1255,7 @@ const RECIPES = [
     tags: ["beef", "russian", "creamy", "comfort food"],
     time: "35 min",
     calories: 580,
+    nutrition: { protein: 36, carbs: 52, fat: 28, fiber: 3 },
     servings: 4,
     rating: 4.8,
     description:
@@ -1266,6 +1300,7 @@ const RECIPES = [
     tags: ["dessert", "cookies", "baking", "vegetarian"],
     time: "35 min + 1h chill",
     calories: 140,
+    nutrition: { protein: 1, carbs: 14, fat: 9, fiber: 1 },
     servings: 24,
     rating: 4.7,
     description:
@@ -1299,6 +1334,7 @@ const RECIPES = [
     tags: ["beef", "broth", "healthy", "meal-prep"],
     time: "3h 30m",
     calories: 45,
+    nutrition: { protein: 6, carbs: 2, fat: 1, fiber: 0 },
     servings: 8,
     rating: 4.8,
     description:
@@ -1333,6 +1369,7 @@ const RECIPES = [
     tags: ["turkey", "american", "baked", "comfort food"],
     time: "1h 20m",
     calories: 520,
+    nutrition: { protein: 36, carbs: 52, fat: 18, fiber: 3 },
     servings: 6,
     rating: 4.7,
     description:
@@ -1375,6 +1412,7 @@ const RECIPES = [
     tags: ["beef", "italian", "comfort food", "classic"],
     time: "1h",
     calories: 380,
+    nutrition: { protein: 24, carbs: 20, fat: 22, fiber: 2 },
     servings: 6,
     rating: 4.9,
     description:
@@ -1417,6 +1455,7 @@ const RECIPES = [
     tags: ["dessert", "baking", "chocolate", "vegetarian"],
     time: "45 min",
     calories: 310,
+    nutrition: { protein: 5, carbs: 40, fat: 16, fiber: 2 },
     servings: 8,
     rating: 4.9,
     description:
@@ -1455,6 +1494,7 @@ const RECIPES = [
     tags: ["chicken", "instapot", "pressure cooker", "broth", "easy"],
     time: "45 min",
     calories: 370,
+    nutrition: { protein: 38, carbs: 10, fat: 18, fiber: 2 },
     servings: 4,
     rating: 4.8,
     description:
@@ -1491,6 +1531,7 @@ const RECIPES = [
     tags: ["chicken", "mediterranean", "one-pan", "quick"],
     time: "30 min",
     calories: 390,
+    nutrition: { protein: 36, carbs: 12, fat: 22, fiber: 3 },
     servings: 4,
     rating: 4.8,
     description:
@@ -1529,6 +1570,7 @@ const RECIPES = [
     tags: ["chicken", "italian", "lemon", "capers", "quick"],
     time: "25 min",
     calories: 530,
+    nutrition: { protein: 44, carbs: 22, fat: 28, fiber: 1 },
     servings: 4,
     rating: 4.9,
     description:
@@ -1564,6 +1606,7 @@ const RECIPES = [
     tags: ["cheesecake", "pumpkin", "low-sugar", "baked", "holiday"],
     time: "1h 30m + chilling",
     calories: 320,
+    nutrition: { protein: 7, carbs: 18, fat: 26, fiber: 1 },
     servings: 10,
     rating: 4.9,
     description:
@@ -1598,6 +1641,7 @@ const RECIPES = [
     tags: ["sauce", "thai", "quick", "vegan", "5-minute"],
     time: "5 min",
     calories: 120,
+    nutrition: { protein: 4, carbs: 8, fat: 8, fiber: 1 },
     servings: 6,
     rating: 4.8,
     description:
@@ -1630,6 +1674,7 @@ const RECIPES = [
     tags: ["salmon", "orzo", "quick", "healthy", "spinach"],
     time: "25 min",
     calories: 480,
+    nutrition: { protein: 40, carbs: 36, fat: 18, fiber: 3 },
     servings: 4,
     rating: 4.8,
     description:
@@ -1663,6 +1708,7 @@ const RECIPES = [
     tags: ["vegetarian", "soup", "squash", "roasted", "comfort food"],
     time: "55 min",
     calories: 210,
+    nutrition: { protein: 4, carbs: 34, fat: 8, fiber: 6 },
     servings: 4,
     rating: 4.8,
     description:
@@ -1697,6 +1743,7 @@ const RECIPES = [
     tags: ["instapot", "chicken", "rice", "asian", "comforting"],
     time: "1h 15m",
     calories: 299,
+    nutrition: { protein: 24, carbs: 38, fat: 6, fiber: 2 },
     servings: 6,
     rating: 4.7,
     description:
@@ -1732,6 +1779,7 @@ const RECIPES = [
     tags: ["mexican", "cookies", "anise", "baked", "traditional", "holiday"],
     time: "1h",
     calories: 110,
+    nutrition: { protein: 1, carbs: 13, fat: 6, fiber: 0 },
     servings: 36,
     rating: 4.8,
     description:
@@ -1767,6 +1815,7 @@ const RECIPES = [
     tags: ["french", "chicken", "mustard", "creamy", "bistro"],
     time: "30 min",
     calories: 450,
+    nutrition: { protein: 38, carbs: 6, fat: 28, fiber: 0 },
     servings: 2,
     rating: 4.9,
     description:
@@ -1805,6 +1854,7 @@ const RECIPES = [
     tags: ["fish", "mediterranean", "quick", "healthy", "seafood"],
     time: "20 min",
     calories: 280,
+    nutrition: { protein: 28, carbs: 8, fat: 14, fiber: 2 },
     servings: 2,
     rating: 4.9,
     description:
@@ -1842,6 +1892,7 @@ const RECIPES = [
     tags: ["salad", "low-carb", "quick", "vegetarian", "side"],
     time: "10 min",
     calories: 80,
+    nutrition: { protein: 1, carbs: 6, fat: 6, fiber: 1 },
     servings: 4,
     rating: 4.6,
     description:
@@ -1870,6 +1921,7 @@ const RECIPES = [
     tags: ["vegetable", "roasted", "quick", "vegetarian", "side", "low-carb"],
     time: "20 min",
     calories: 90,
+    nutrition: { protein: 3, carbs: 8, fat: 7, fiber: 3 },
     servings: 4,
     rating: 4.7,
     description:
@@ -1899,6 +1951,7 @@ const RECIPES = [
     tags: ["salad", "mediterranean", "quick", "vegetarian", "side", "low-carb"],
     time: "10 min",
     calories: 150,
+    nutrition: { protein: 5, carbs: 9, fat: 12, fiber: 2 },
     servings: 4,
     rating: 4.8,
     description:
@@ -1931,6 +1984,7 @@ const RECIPES = [
     tags: ["eggs", "brunch", "baked", "german", "quick"],
     time: "30 min",
     calories: 310,
+    nutrition: { protein: 10, carbs: 36, fat: 14, fiber: 2 },
     servings: 4,
     rating: 4.9,
     description:

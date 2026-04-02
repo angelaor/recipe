@@ -923,6 +923,59 @@ html.text-lg { font-size: 22px; }
   white-space: nowrap;
 }
 
+/* ── Nutrition Panel ── */
+.nutrition-panel {
+  margin-bottom: 24px;
+  padding: 16px 18px;
+  background: var(--bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.nutrition-title {
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.macro-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 6px 8px;
+  border-radius: 10px;
+  gap: 3px;
+}
+.macro-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.macro-label {
+  font-size: .68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  opacity: .75;
+}
+.macro-protein { background: #e8f4fd; color: #1a6fa8; }
+.macro-carbs   { background: #fef3e2; color: #b35e00; }
+.macro-fat     { background: #fde8f0; color: #a0244e; }
+.macro-fiber   { background: #e8f7ee; color: #1a7a3e; }
+
+@media (prefers-color-scheme: dark) {
+  .macro-protein { background: rgba(26,111,168,.18); color: #6db8f5; }
+  .macro-carbs   { background: rgba(179,94,0,.18);   color: #f5b86d; }
+  .macro-fat     { background: rgba(160,36,78,.18);  color: #f586ab; }
+  .macro-fiber   { background: rgba(26,122,62,.18);  color: #5fd88a; }
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .nav { padding: 20px 20px; }

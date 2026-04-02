@@ -538,10 +538,31 @@ function renderModal() {
             data-s="${n}">${n}</button>
   `).join("");
 
-  // Scaled calories per serving
-  const calPerServing = Math.round(recipe.calories * (recipe.servings / activeServings) === recipe.calories
-    ? recipe.calories
-    : recipe.calories * recipe.servings / activeServings);
+  // Nutrition is stored per serving — doesn't change with serving count
+  const calPerServing = recipe.calories;
+  const n = recipe.nutrition;
+  const nutritionHTML = n ? `
+    <div class="nutrition-panel">
+      <div class="nutrition-title">Nutrition per serving</div>
+      <div class="nutrition-grid">
+        <div class="macro-cell macro-protein">
+          <span class="macro-val">${n.protein}g</span>
+          <span class="macro-label">Protein</span>
+        </div>
+        <div class="macro-cell macro-carbs">
+          <span class="macro-val">${n.carbs}g</span>
+          <span class="macro-label">Carbs</span>
+        </div>
+        <div class="macro-cell macro-fat">
+          <span class="macro-val">${n.fat}g</span>
+          <span class="macro-label">Fat</span>
+        </div>
+        <div class="macro-cell macro-fiber">
+          <span class="macro-val">${n.fiber}g</span>
+          <span class="macro-label">Fiber</span>
+        </div>
+      </div>
+    </div>` : "";
 
   $("modal-content").innerHTML = `
     <div class="modal-hero">
@@ -566,6 +587,8 @@ function renderModal() {
         ${servingBtnsHTML}
         <span class="serving-note">Amounts adjust automatically</span>
       </div>
+
+      ${nutritionHTML}
 
       <div class="modal-section-title">Ingredients</div>
       <div class="ingredients-list">${ingredientsHTML}</div>
