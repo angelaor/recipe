@@ -1446,6 +1446,41 @@ const RECIPES = [
   },
 
 
+  // ── Angela's Photo Recipes ──
+  {
+    id: "garlic-chicken-mirepoix-instapot",
+    name: "Garlic Chicken Thighs with Mirepoix Broth",
+    emoji: "🫕",
+    mealTypes: ["dinner", "lunch"],
+    tags: ["chicken", "instapot", "pressure cooker", "broth", "easy"],
+    time: "45 min",
+    calories: 370,
+    servings: 4,
+    rating: 4.8,
+    description:
+      "Tender, fall-off-the-bone chicken thighs pressure-cooked in a fragrant mirepoix broth. The Instant Pot does all the heavy lifting — deeply flavourful in under an hour.",
+    ingredients: [
+      { name: "chicken thighs",  amount: "1½ lbs" },
+      { name: "carrots",         amount: "3, diced" },
+      { name: "celery",          amount: "2 stalks, diced" },
+      { name: "onion",           amount: "1 large, diced" },
+      { name: "garlic",          amount: "4 cloves, minced" },
+      { name: "chicken broth",   amount: "4 cups" },
+      { name: "olive oil",       amount: "2 tbsp (or butter, or both)" },
+      { name: "black pepper",    amount: "½ tsp" },
+      { name: "salt",            amount: "½ tsp" },
+    ],
+    instructions: [
+      "Season chicken thighs generously on both sides with salt and pepper.",
+      "Set Instant Pot to Sauté mode. Heat olive oil (or butter) until shimmering. Sear chicken thighs 2 minutes per side until golden. Remove and set aside.",
+      "Build the mirepoix: in the same pot, add diced onion, celery, and carrots. Sauté for 6 minutes, scraping up any browned bits from the bottom.",
+      "Stir in minced garlic (and any optional spices such as thyme or paprika). Cook 1 minute until fragrant.",
+      "Return chicken thighs to the pot. Pour in chicken broth — liquid should nearly cover the chicken.",
+      "Secure the lid and set the valve to Sealing. Pressure cook on HIGH for 30 minutes.",
+      "Allow a natural pressure release for 10 minutes, then carefully switch to quick release. Remove the lid, taste the broth, and adjust seasoning. Serve in deep bowls with crusty bread or over rice.",
+    ],
+  },
+
   // ── Angela's Scanned Recipe ──
   {
     id: "lemon-blueberry-dutch-baby",
