@@ -1445,4 +1445,40 @@ const RECIPES = [
     ],
   },
 
+
+  // ── Angela's Scanned Recipe ──
+  {
+    id: "lemon-blueberry-dutch-baby",
+    name: "Fresh Lemon-Blueberry Dutch Baby",
+    emoji: "🫐",
+    mealTypes: ["breakfast"],
+    tags: ["eggs", "brunch", "baked", "german", "quick"],
+    time: "30 min",
+    calories: 310,
+    servings: 4,
+    rating: 4.9,
+    description:
+      "A dramatic, puffy oven pancake with bright lemon zest and juicy blueberries bursting through a golden, custardy shell. Stunning enough for guests, simple enough for any morning.",
+    ingredients: [
+      { name: "unsalted butter",        amount: "4 tbsp, divided" },
+      { name: "milk",                   amount: "½ cup (125g), whole or 2%" },
+      { name: "all-purpose flour",      amount: "½ cup (64g)" },
+      { name: "egg",                    amount: "4 large" },
+      { name: "sugar",                  amount: "3 tbsp (43g) granulated" },
+      { name: "vanilla extract",        amount: "1 tsp" },
+      { name: "salt",                   amount: "¼ tsp" },
+      { name: "lemon",                  amount: "zest of 1" },
+      { name: "blueberries",            amount: "1 cup (154g), fresh or frozen" },
+      { name: "confectioners sugar",    amount: "for dusting" },
+    ],
+    instructions: [
+      "Place a 10-inch cast iron skillet (or oven-safe skillet) in the oven and preheat to 425°F (220°C). Let the skillet heat for at least 10 minutes — a screaming-hot pan is the secret to the puff.",
+      "While the oven heats, make the batter: combine milk, flour, eggs, sugar, vanilla, salt, and lemon zest in a blender. Blend 30–60 seconds until completely smooth and slightly frothy. Rest 5 minutes.",
+      "Carefully pull the hot skillet from the oven. Add 3 tbsp of butter and swirl until fully melted and coating the sides.",
+      "Immediately pour the batter into the centre of the hot buttered skillet. Scatter the blueberries evenly over the top. Dot with the remaining 1 tbsp of butter.",
+      "Bake at 425°F for 20–25 minutes until the Dutch Baby is dramatically puffed, deeply golden at the edges, and set in the centre. Do not open the oven door during the first 15 minutes.",
+      "Remove from oven — it will begin to deflate within a minute, which is perfectly normal. Dust generously with confectioners sugar and serve immediately, right from the skillet.",
+    ],
+  },
+
 ];
