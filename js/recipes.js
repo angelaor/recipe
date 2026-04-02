@@ -1833,6 +1833,95 @@ const RECIPES = [
     ],
   },
 
+  // ── Quick Side Dishes ──
+  {
+    id: "cucumber-herb-salad",
+    name: "Cucumber-Herb Salad",
+    emoji: "🥒",
+    mealTypes: ["lunch", "dinner"],
+    tags: ["salad", "low-carb", "quick", "vegetarian", "side"],
+    time: "10 min",
+    calories: 80,
+    servings: 4,
+    rating: 4.6,
+    description:
+      "A cool, refreshing low-carb salad with crisp cucumber, fresh dill, and mint, brightened with lemon juice. Ready in minutes and pairs with anything.",
+    ingredients: [
+      { name: "cucumber",    amount: "2 large, thinly sliced" },
+      { name: "fresh dill",  amount: "2 tbsp, chopped" },
+      { name: "fresh mint",  amount: "2 tbsp, chopped" },
+      { name: "lemon juice", amount: "2 tbsp" },
+      { name: "olive oil",   amount: "2 tbsp" },
+      { name: "salt",        amount: "pinch of sea salt" },
+    ],
+    instructions: [
+      "Thinly slice the cucumbers and place in a bowl.",
+      "Add the chopped dill and mint.",
+      "Drizzle with lemon juice and olive oil.",
+      "Toss to combine, season with a pinch of sea salt, and serve.",
+    ],
+  },
+
+  {
+    id: "zaatar-broccolini",
+    name: "Roasted Za'atar Broccolini",
+    emoji: "🥦",
+    mealTypes: ["lunch", "dinner"],
+    tags: ["vegetable", "roasted", "quick", "vegetarian", "side", "low-carb"],
+    time: "20 min",
+    calories: 90,
+    servings: 4,
+    rating: 4.7,
+    description:
+      "Crispy oven-roasted broccolini coated in fragrant za'atar spice blend with a squeeze of lemon. An irresistibly easy side that elevates any plate.",
+    ingredients: [
+      { name: "broccolini",  amount: "16 oz" },
+      { name: "olive oil",   amount: "3 tbsp" },
+      { name: "za'atar",     amount: "1½ tbsp" },
+      { name: "salt",        amount: "to taste" },
+      { name: "black pepper", amount: "to taste" },
+      { name: "lemon",       amount: "1 wedge, for serving" },
+    ],
+    instructions: [
+      "Preheat oven to 425°F.",
+      "Toss broccolini with olive oil, za'atar, salt, and pepper until evenly coated.",
+      "Spread in a single layer on a baking sheet.",
+      "Roast 12–15 minutes until tender and the tips are slightly crispy.",
+      "Serve with a squeeze of lemon.",
+    ],
+  },
+
+  {
+    id: "tomato-feta-village-salad",
+    name: "Tomato-Feta Village Salad",
+    emoji: "🍅",
+    mealTypes: ["lunch", "dinner"],
+    tags: ["salad", "mediterranean", "quick", "vegetarian", "side", "low-carb"],
+    time: "10 min",
+    calories: 150,
+    servings: 4,
+    rating: 4.8,
+    description:
+      "A classic Greek-style salad loaded with ripe tomatoes, crunchy cucumber, red onion, creamy feta, and a simple oregano dressing. Fresh, bold, and satisfying.",
+    ingredients: [
+      { name: "tomatoes",         amount: "4 medium, chopped" },
+      { name: "cucumber",         amount: "1 large, chopped" },
+      { name: "red onion",        amount: "¾, thinly sliced" },
+      { name: "feta cheese",      amount: "6 oz, crumbled or sliced" },
+      { name: "dried oregano",    amount: "1 tsp" },
+      { name: "olive oil",        amount: "¼ cup" },
+      { name: "red wine vinegar", amount: "1 tbsp" },
+      { name: "salt",             amount: "to taste" },
+      { name: "black pepper",     amount: "to taste" },
+    ],
+    instructions: [
+      "Combine tomatoes, cucumber, and red onion in a large bowl.",
+      "Add the feta and dried oregano.",
+      "Drizzle with olive oil and red wine vinegar.",
+      "Toss gently, season with salt and pepper, and serve.",
+    ],
+  },
+
   // ── Angela's Scanned Recipe ──
   {
     id: "lemon-blueberry-dutch-baby",
