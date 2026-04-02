@@ -24,6 +24,8 @@ const MAINS = [
   { key: "avocado",    label: "Avocado",     emoji: "🥑", ingKeys: ["avocado"] },
   { key: "blackbeans", label: "Black Beans", emoji: "🫘", ingKeys: ["black beans"] },
   { key: "tomatoes",   label: "Tomatoes",    emoji: "🍅", ingKeys: ["tomatoes"] },
+  { key: "whitefish",  label: "White Fish",  emoji: "🐠", ingKeys: ["cod fillets", "halibut", "snapper", "sea bass"] },
+  { key: "baking",     label: "Baking",      emoji: "🧁", ingKeys: ["all-purpose flour"] },
 ];
 
 // ── DOM helpers ──
@@ -47,13 +49,13 @@ function categorise(name) {
   if (/(pasta|spaghetti|linguine|fettuccine|penne|rigatoni|noodle|tortilla|arborio|breadcrumb|crouton|orzo|panko|white rice|jasmine rice|cooked rice|flour|oat|sourdough|\bbread\b)/.test(n))
     return "Grains & Starches";
   // Vegetables & Fresh Herbs (use "kalamata" not "olive" so olive oil falls to Pantry)
-  if (/(onion|garlic|carrot|celery|tomato|bell pepper|mushroom|avocado|jalap|lime|lemon|basil|cilantro|parsley|dill|chive|ginger|spinach|cabbage|zucchini|potato|cucumber|romaine|lettuce|kalamata|scallion|green onion|\bpeas?\b|sprout)/.test(n))
+  if (/(onion|shallot|garlic|carrot|celery|tomato|bell pepper|mushroom|avocado|jalap|lime|lemon|basil|cilantro|parsley|dill|chive|ginger|spinach|cabbage|zucchini|potato|cucumber|romaine|lettuce|kalamata|caper|scallion|green onion|\bpeas?\b|sprout)/.test(n))
     return "Vegetables & Fresh Herbs";
   // Dairy
   if (/(cream|butter|milk|yogurt|cheese|mozzarella|sour cream|buttermilk|pecorino)/.test(n))
     return "Dairy";
   // Herbs & Spices
-  if (/(thyme|oregano|paprika|cumin|chili|cinnamon|\bsalt\b|pepper|bay leaf|vanilla|red pepper flake|chia|rosemary|clove|garam|turmeric|cayenne|baking powder|baking soda|sesame|fish sauce|soy sauce|oyster sauce|dried)/.test(n))
+  if (/(thyme|oregano|paprika|cumin|chili|cinnamon|anise|\bsalt\b|pepper|bay leaf|vanilla|red pepper flake|chia|rosemary|clove|garam|turmeric|cayenne|baking powder|baking soda|sesame|fish sauce|soy sauce|oyster sauce|dried|tarragon)/.test(n))
     return "Herbs & Spices";
   return "Pantry & Oils";
 }
