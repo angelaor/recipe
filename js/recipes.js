@@ -2050,6 +2050,43 @@ const RECIPES = [
     ],
   },
 
+  {
+    id: "sous-vide-short-ribs",
+    name: "Sous Vide \"Braised\" Beef Short Ribs",
+    emoji: "🥩",
+    mealTypes: ["dinner"],
+    tags: ["beef", "sous vide", "braised", "slow-cooked", "fancy"],
+    time: "14–16 hrs + 30 min",
+    calories: 620,
+    nutrition: { protein: 48, carbs: 6, fat: 44, fiber: 0 },
+    servings: 4,
+    rating: 5.0,
+    description:
+      "Ultra-tender, fall-apart short ribs with deep braised flavor — achieved with a sous vide bath at 167°F for up to 16 hours. A showstopper that practically cooks itself.",
+    ingredients: [
+      { name: "beef short ribs",       amount: "3–4 lbs (English-cut)" },
+      { name: "beef broth",            amount: "1 cup" },
+      { name: "red wine",              amount: "½ cup (optional but gorgeous)" },
+      { name: "tomato paste",          amount: "1 tbsp" },
+      { name: "worcestershire sauce",  amount: "1 tbsp" },
+      { name: "garlic",                amount: "3 cloves, smashed" },
+      { name: "onion",                 amount: "1 small, sliced" },
+      { name: "fresh thyme",           amount: "2 sprigs" },
+      { name: "bay leaf",              amount: "1" },
+      { name: "unsalted butter",       amount: "1–2 tbsp (for finishing sauce)" },
+      { name: "salt",                  amount: "to taste" },
+      { name: "black pepper",          amount: "to taste" },
+    ],
+    instructions: [
+      "Set your sous vide circulator to 167°F — this gives a true braised texture. (For a firmer bite, try 155°F for 24 hrs; for completely fall-apart, 185°F for 8 hrs.)",
+      "Season ribs generously with salt and pepper. Optional but highly recommended: sear in a smoking-hot pan until deep brown on all sides to build braised flavor.",
+      "Add ribs to the sous vide bag along with broth, wine, tomato paste, Worcestershire, garlic, onion, thyme, and bay leaf. Vacuum seal or use the water-displacement method.",
+      "Cook at 167°F for 14–16 hours. The meat will be meltingly tender but not mushy.",
+      "Remove ribs from the bag and pat dry. Pour all the bag juices into a saucepan. Simmer 10–15 minutes until reduced and glossy. Whisk in butter to finish.",
+      "Optional final sear: sear ribs quickly in a hot pan or under the broiler for a restaurant-quality crust. Brush with reduced sauce and serve.",
+    ],
+  },
+
   // ── Angela's Scanned Recipe ──
   {
     id: "lemon-blueberry-dutch-baby",
