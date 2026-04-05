@@ -467,6 +467,13 @@ body {
   position: relative;
   overflow: hidden;
 }
+.card-visual.card-photo {
+  background-size: cover;
+  background-position: center;
+}
+.card-emoji-overlay {
+  display: none;
+}
 .card-visual::before {
   content: '';
   position: absolute;
@@ -609,6 +616,10 @@ body {
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   overflow: hidden;
   margin-top: -52px;
+}
+.modal-hero-photo {
+  background-size: cover;
+  background-position: center;
 }
 .modal-hero .modal-bg {
   position: absolute;

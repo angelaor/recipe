@@ -379,12 +379,19 @@ function recipeCardHTML(recipe, score) {
     ? `<div class="match-badge ${score >= 70 ? "high" : score >= 40 ? "mid" : ""}">${score}% match</div>`
     : "";
 
-  return `
-    <div class="recipe-card" data-id="${recipe.id}">
-      <div class="card-visual color-${colorIndex}">
+  const cardVisual = recipe.image
+    ? `<div class="card-visual card-photo" style="background-image:url('images/${recipe.image}')">
+        ${badge}
+        <span class="card-emoji card-emoji-overlay">${recipe.emoji}</span>
+       </div>`
+    : `<div class="card-visual color-${colorIndex}">
         ${badge}
         <span class="card-emoji">${recipe.emoji}</span>
-      </div>
+       </div>`;
+
+  return `
+    <div class="recipe-card" data-id="${recipe.id}">
+      ${cardVisual}
       <div class="card-body">
         <div class="card-tags">
           ${mealLabels}
@@ -564,11 +571,15 @@ function renderModal() {
       </div>
     </div>` : "";
 
+  const modalHero = recipe.image
+    ? `<div class="modal-hero modal-hero-photo" style="background-image:url('images/${recipe.image}')"></div>`
+    : `<div class="modal-hero">
+        <div class="modal-bg" style="background:${MODAL_GRADIENTS[colorIndex]}"></div>
+        <span style="position:relative;z-index:1;font-size:7rem;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5))">${recipe.emoji}</span>
+       </div>`;
+
   $("modal-content").innerHTML = `
-    <div class="modal-hero">
-      <div class="modal-bg" style="background:${MODAL_GRADIENTS[colorIndex]}"></div>
-      <span style="position:relative;z-index:1;font-size:7rem;filter:drop-shadow(0 4px 16px rgba(0,0,0,.5))">${recipe.emoji}</span>
-    </div>
+    ${modalHero}
     <div class="modal-body">
       <div class="modal-tags">
         ${recipe.mealTypes.map(m => `<span class="modal-tag">${m}</span>`).join("")}

@@ -2127,6 +2127,7 @@ const RECIPES = [
     id: "savory-greek-dutch-baby",
     name: "Savory Greek Dutch Baby",
     emoji: "🫒",
+    image: "savory-greek-dutch-baby.jpg",
     mealTypes: ["breakfast", "lunch"],
     tags: ["eggs", "mediterranean", "vegetarian", "baked", "brunch", "quick"],
     time: "25 min",
