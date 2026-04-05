@@ -149,13 +149,14 @@
     <span class="view-counter-icon">👁</span>
     <span class="view-counter-num" id="view-count">—</span>
     <span class="view-counter-label">views</span>
+    <div class="view-counter-tooltip" id="view-tooltip">Fetching location…</div>
   </div>
 
   <script src="js/recipes.js?v=4"></script>
   <script src="js/app.js?v=4"></script>
   <script>
-    // Increment & display page views via free counter API, with localStorage fallback
     (function () {
+      // ── Page view counter ──
       const LOCAL_KEY = "recipebox-views";
 
       function showCount(n) {
@@ -163,7 +164,6 @@
         if (el) el.textContent = Number(n).toLocaleString();
       }
 
-      // Always bump the local count too (offline fallback)
       const local = parseInt(localStorage.getItem(LOCAL_KEY) || "0", 10) + 1;
       localStorage.setItem(LOCAL_KEY, local);
 
@@ -171,6 +171,43 @@
         .then(r => r.json())
         .then(d => showCount(d.count ?? d.value ?? local))
         .catch(() => showCount(local));
+
+      // ── Geolocation tooltip ──
+      const tooltip = document.getElementById("view-tooltip");
+      const counter = document.getElementById("view-counter");
+      let locationFetched = false;
+
+      function flagEmoji(countryCode) {
+        // Convert country code (e.g. "US") to flag emoji
+        return countryCode
+          .toUpperCase()
+          .split("")
+          .map(c => String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65))
+          .join("");
+      }
+
+      function fetchLocation() {
+        if (locationFetched) return;
+        locationFetched = true;
+        fetch("https://ipapi.co/json/")
+          .then(r => r.json())
+          .then(d => {
+            const flag    = d.country_code ? flagEmoji(d.country_code) : "🌍";
+            const city    = d.city    || "";
+            const region  = d.region  || "";
+            const country = d.country_name || "";
+            // Build a friendly line: "📍 Austin, Texas · United States"
+            const place = [city, region].filter(Boolean).join(", ");
+            const line  = place ? `${place} · ${country}` : country;
+            tooltip.innerHTML = `${flag} <strong>Hello from</strong><br>${line}`;
+          })
+          .catch(() => {
+            tooltip.textContent = "📍 Location unavailable";
+          });
+      }
+
+      // Fetch on first hover so it's ready instantly on subsequent hovers
+      counter.addEventListener("mouseenter", fetchLocation, { once: true });
     })();
   </script>
 </body>

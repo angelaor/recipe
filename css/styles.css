@@ -1005,12 +1005,43 @@ html.text-lg { font-size: 22px; }
   font-size: .78rem;
   color: var(--text-muted);
   z-index: 99;
-  pointer-events: none;
+  pointer-events: auto;
   transition: opacity .3s;
+  position: relative;
 }
-.view-counter-icon { font-size: .85rem; line-height: 1; }
-.view-counter-num  { font-weight: 700; color: var(--text); font-size: .82rem; }
+.view-counter-icon  { font-size: .85rem; line-height: 1; }
+.view-counter-num   { font-weight: 700; color: var(--text); font-size: .82rem; }
 .view-counter-label { letter-spacing: .03em; }
+.view-counter-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: .78rem;
+  color: var(--text);
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,.12);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .2s ease, transform .2s ease;
+  line-height: 1.6;
+}
+.view-counter-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 18px;
+  border: 6px solid transparent;
+  border-top-color: var(--border);
+}
+.view-counter:hover .view-counter-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ── Responsive ── */
 @media (max-width: 640px) {
