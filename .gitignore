@@ -1,0 +1,21 @@
+# Claude Code local settings
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+# Raw photo files (keep processed JPEGs, ignore originals)
+*.DNG
+*.dng
+*.RAW
+*.raw
+*.CR2
+*.cr2
+
+# Node (if you ever add a build step)
+node_modules/
