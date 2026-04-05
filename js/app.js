@@ -379,10 +379,10 @@ function recipeCardHTML(recipe, score) {
     ? `<div class="match-badge ${score >= 70 ? "high" : score >= 40 ? "mid" : ""}">${score}% match</div>`
     : "";
 
+  const imgPos = recipe.imagePosition || "center center";
   const cardVisual = recipe.image
-    ? `<div class="card-visual card-photo" style="background-image:url('images/${recipe.image}')">
+    ? `<div class="card-visual card-photo" style="background-image:url('images/${recipe.image}');background-size:cover;background-position:${imgPos};">
         ${badge}
-        <span class="card-emoji card-emoji-overlay">${recipe.emoji}</span>
        </div>`
     : `<div class="card-visual color-${colorIndex}">
         ${badge}

@@ -471,7 +471,8 @@ body {
   background-size: cover;
   background-position: center;
 }
-.card-emoji-overlay {
+/* Prevent the blur pseudo-element from stacking over the photo */
+.card-visual.card-photo::before {
   display: none;
 }
 .card-visual::before {
