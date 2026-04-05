@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Recipe Box</title>
-  <link rel="stylesheet" href="css/styles.css?v=4" />
+  <link rel="stylesheet" href="css/styles.css?v=5" />
 </head>
 <body>
 
@@ -152,25 +152,28 @@
     <div class="view-counter-tooltip" id="view-tooltip">Fetching location…</div>
   </div>
 
-  <script src="js/recipes.js?v=4"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/recipes.js?v=5"></script>
+  <script src="js/app.js?v=5"></script>
+  <!-- GoatCounter analytics tracking -->
+  <script data-goatcounter="https://thekitchenbuddy.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+
   <script>
     (function () {
-      // ── Page view counter ──
-      const LOCAL_KEY = "recipebox-views";
+      const GC_TOKEN = "wuhuigei2sn5b8jvhhtihwbspceqkwuhpt1u12bonf5afnzmo";
 
+      // ── Page view counter badge (reads from GoatCounter API) ──
       function showCount(n) {
         const el = document.getElementById("view-count");
         if (el) el.textContent = Number(n).toLocaleString();
       }
 
-      const local = parseInt(localStorage.getItem(LOCAL_KEY) || "0", 10) + 1;
-      localStorage.setItem(LOCAL_KEY, local);
-
-      fetch("https://api.counterapi.dev/v1/therecipebox-angela/pageviews/up")
+      fetch("https://thekitchenbuddy.goatcounter.com/api/v0/stats/hits?start=2020-01-01", {
+        headers: { "Authorization": "Bearer " + GC_TOKEN }
+      })
         .then(r => r.json())
-        .then(d => showCount(d.count ?? d.value ?? local))
-        .catch(() => showCount(local));
+        .then(d => showCount(d.total ?? "—"))
+        .catch(() => showCount("—"));
 
       // ── Geolocation tooltip ──
       const tooltip = document.getElementById("view-tooltip");
@@ -178,7 +181,6 @@
       let locationFetched = false;
 
       function flagEmoji(countryCode) {
-        // Convert country code (e.g. "US") to flag emoji
         return countryCode
           .toUpperCase()
           .split("")
@@ -187,7 +189,6 @@
       }
 
       function showLocation(d) {
-        // ipwho.is response shape
         const flag    = (d.flag && d.flag.emoji) ? d.flag.emoji
                       : d.country_code           ? flagEmoji(d.country_code)
                       : "🌍";
@@ -202,7 +203,6 @@
       function fetchLocation() {
         if (locationFetched) return;
         locationFetched = true;
-        // Try ipwho.is first (reliable, HTTPS, includes flag emoji)
         fetch("https://ipwho.is/")
           .then(r => r.json())
           .then(d => {
@@ -210,7 +210,6 @@
             throw new Error("bad response");
           })
           .catch(() =>
-            // Fallback to ipapi.co
             fetch("https://ipapi.co/json/")
               .then(r => r.json())
               .then(d => showLocation({
@@ -221,7 +220,6 @@
           );
       }
 
-      // Fetch on first hover so it's ready instantly on subsequent hovers
       counter.addEventListener("mouseenter", fetchLocation, { once: true });
     })();
   </script>
