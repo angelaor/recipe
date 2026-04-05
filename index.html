@@ -186,24 +186,39 @@
           .join("");
       }
 
+      function showLocation(d) {
+        // ipwho.is response shape
+        const flag    = (d.flag && d.flag.emoji) ? d.flag.emoji
+                      : d.country_code           ? flagEmoji(d.country_code)
+                      : "🌍";
+        const city    = d.city    || "";
+        const region  = d.region  || d.region_code || "";
+        const country = d.country || d.country_name || "";
+        const place   = [city, region].filter(Boolean).join(", ");
+        const line    = place ? `${place} · ${country}` : country || "Unknown";
+        tooltip.innerHTML = `${flag} <strong>Hello from</strong><br>${line}`;
+      }
+
       function fetchLocation() {
         if (locationFetched) return;
         locationFetched = true;
-        fetch("https://ipapi.co/json/")
+        // Try ipwho.is first (reliable, HTTPS, includes flag emoji)
+        fetch("https://ipwho.is/")
           .then(r => r.json())
           .then(d => {
-            const flag    = d.country_code ? flagEmoji(d.country_code) : "🌍";
-            const city    = d.city    || "";
-            const region  = d.region  || "";
-            const country = d.country_name || "";
-            // Build a friendly line: "📍 Austin, Texas · United States"
-            const place = [city, region].filter(Boolean).join(", ");
-            const line  = place ? `${place} · ${country}` : country;
-            tooltip.innerHTML = `${flag} <strong>Hello from</strong><br>${line}`;
+            if (d && d.success !== false) { showLocation(d); return; }
+            throw new Error("bad response");
           })
-          .catch(() => {
-            tooltip.textContent = "📍 Location unavailable";
-          });
+          .catch(() =>
+            // Fallback to ipapi.co
+            fetch("https://ipapi.co/json/")
+              .then(r => r.json())
+              .then(d => showLocation({
+                flag: { emoji: d.country_code ? flagEmoji(d.country_code) : "🌍" },
+                city: d.city, region: d.region, country: d.country_name
+              }))
+              .catch(() => { tooltip.textContent = "🌍 Somewhere on Earth!"; })
+          );
       }
 
       // Fetch on first hover so it's ready instantly on subsequent hovers
