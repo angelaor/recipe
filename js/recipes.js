@@ -2162,4 +2162,193 @@ const RECIPES = [
     ],
   },
 
+  // ── Juices & Smoothies ──
+  {
+    id: "absolutely-zuke",
+    name: "Absolutely Zuke",
+    emoji: "🥒",
+    mealTypes: ["breakfast"],
+    tags: ["juice", "smoothie", "green", "vegetarian", "healthy", "no-cook"],
+    time: "5 min",
+    calories: 140,
+    nutrition: { protein: 3, carbs: 32, fat: 1, fiber: 4 },
+    servings: 2,
+    rating: 4.7,
+    description:
+      "A refreshing green juice with zucchini, apple, kale, and pineapple. Light, naturally sweet, and packed with vitamins.",
+    ingredients: [
+      { name: "zucchini",      amount: "½, chopped" },
+      { name: "apple",         amount: "1, cored and chopped" },
+      { name: "baby kale",     amount: "1 cup" },
+      { name: "pineapple",     amount: "1 large ring, chopped" },
+      { name: "water",         amount: "1 cup" },
+    ],
+    instructions: [
+      "Add all ingredients to a juicer or high-speed blender.",
+      "Blend until completely smooth. If using a juicer, pass all ingredients through and stir.",
+      "Pour over ice and serve immediately.",
+    ],
+  },
+
+  {
+    id: "green-lemonade",
+    name: "Green Lemonade",
+    emoji: "🍋",
+    mealTypes: ["breakfast"],
+    tags: ["juice", "green", "vegetarian", "healthy", "no-cook", "detox"],
+    time: "5 min",
+    calories: 120,
+    nutrition: { protein: 2, carbs: 28, fat: 0, fiber: 4 },
+    servings: 2,
+    rating: 4.8,
+    description:
+      "Bright and tangy green juice with lemon, apple, and kale. A simple, energising morning drink that tastes better than it looks.",
+    ingredients: [
+      { name: "lemon",   amount: "1, peeled" },
+      { name: "apple",   amount: "1, cored and chopped" },
+      { name: "kale",    amount: "1–2 cups, chopped" },
+      { name: "water",   amount: "1 cup (or coconut water)" },
+    ],
+    instructions: [
+      "Add all ingredients to a juicer or high-speed blender.",
+      "Blend until smooth. Add more water to reach your desired consistency.",
+      "Pour over ice and serve immediately.",
+    ],
+  },
+
+  {
+    id: "waldorf-smash",
+    name: "Waldorf Smash",
+    emoji: "🍏",
+    mealTypes: ["breakfast"],
+    tags: ["juice", "green", "vegetarian", "healthy", "no-cook"],
+    time: "5 min",
+    calories: 130,
+    nutrition: { protein: 2, carbs: 30, fat: 0, fiber: 4 },
+    servings: 2,
+    rating: 4.7,
+    description:
+      "A crisp, fresh juice inspired by the Waldorf salad — apple, celery, ginger, and spinach blended into a zingy, invigorating drink.",
+    ingredients: [
+      { name: "apple",    amount: "2, cored and chopped" },
+      { name: "celery",   amount: "3 stalks, chopped" },
+      { name: "fresh ginger", amount: "½ inch piece" },
+      { name: "spinach",  amount: "1 handful" },
+      { name: "water",    amount: "1 cup" },
+    ],
+    instructions: [
+      "Add all ingredients to a juicer or high-speed blender.",
+      "Blend until smooth.",
+      "Pour over ice and serve immediately.",
+    ],
+  },
+
+  {
+    id: "carrot-oj",
+    name: "Carrot OJ",
+    emoji: "🥕",
+    mealTypes: ["breakfast"],
+    tags: ["juice", "vegetarian", "healthy", "no-cook", "vitamin c"],
+    time: "5 min",
+    calories: 110,
+    nutrition: { protein: 2, carbs: 25, fat: 0, fiber: 3 },
+    servings: 2,
+    rating: 4.7,
+    description:
+      "A sunshine-bright juice of orange, carrot, and romaine lettuce. Naturally sweet, high in vitamin C and beta-carotene, and ready in minutes.",
+    ingredients: [
+      { name: "orange",          amount: "1, peeled and quartered" },
+      { name: "carrot",          amount: "1, chopped" },
+      { name: "romaine lettuce", amount: "1 large leaf" },
+      { name: "water",           amount: "1 cup" },
+    ],
+    instructions: [
+      "Add all ingredients to a juicer or high-speed blender.",
+      "Blend until smooth.",
+      "Pour over ice and serve immediately.",
+    ],
+  },
+
+  {
+    id: "jazzy-pear-punch",
+    name: "Jazzy Pear Punch",
+    emoji: "🍐",
+    mealTypes: ["breakfast"],
+    tags: ["juice", "green", "vegetarian", "healthy", "no-cook", "mint"],
+    time: "5 min",
+    calories: 130,
+    nutrition: { protein: 1, carbs: 30, fat: 0, fiber: 4 },
+    servings: 2,
+    rating: 4.8,
+    description:
+      "Pear, apple, cucumber, celery, and mint — a bright, hydrating juice with natural sweetness and a cool minty finish.",
+    ingredients: [
+      { name: "pear",     amount: "1, cored and chopped" },
+      { name: "apple",    amount: "1, cored and chopped" },
+      { name: "cucumber", amount: "½, chopped" },
+      { name: "celery",   amount: "1 stalk, chopped" },
+      { name: "fresh mint", amount: "a few sprigs" },
+      { name: "water",    amount: "1 cup" },
+    ],
+    instructions: [
+      "Add all ingredients to a juicer or high-speed blender.",
+      "Blend until smooth.",
+      "Pour over ice and serve immediately.",
+    ],
+  },
+
+  {
+    id: "green-colada",
+    name: "Green Colada",
+    emoji: "🌴",
+    mealTypes: ["breakfast"],
+    tags: ["juice", "smoothie", "green", "vegetarian", "healthy", "no-cook", "tropical"],
+    time: "5 min",
+    calories: 120,
+    nutrition: { protein: 2, carbs: 26, fat: 1, fiber: 3 },
+    servings: 2,
+    rating: 4.8,
+    description:
+      "Tropical pineapple and lime meet leafy greens in this refreshing green smoothie. It tastes like a vacation in a glass.",
+    ingredients: [
+      { name: "spinach",          amount: "1 handful" },
+      { name: "baby kale",        amount: "1 cup" },
+      { name: "pineapple chunks", amount: "1 cup" },
+      { name: "cucumber",         amount: "½, chopped" },
+      { name: "lime",             amount: "1, peeled and quartered" },
+      { name: "water",            amount: "1 cup" },
+    ],
+    instructions: [
+      "Add all ingredients to a juicer or high-speed blender.",
+      "Blend until completely smooth.",
+      "Pour over ice and serve immediately.",
+    ],
+  },
+
+  {
+    id: "carrot-cocktail",
+    name: "Carrot Cocktail",
+    emoji: "🥕",
+    mealTypes: ["breakfast"],
+    tags: ["juice", "vegetarian", "healthy", "no-cook", "vitamin c"],
+    time: "5 min",
+    calories: 130,
+    nutrition: { protein: 2, carbs: 30, fat: 0, fiber: 5 },
+    servings: 2,
+    rating: 4.7,
+    description:
+      "Apple, carrot, and lemon — a clean, bright juice that's naturally sweet with a citrus kick. A brilliant daily driver.",
+    ingredients: [
+      { name: "apple",   amount: "1, cored and chopped" },
+      { name: "carrots", amount: "3, chopped" },
+      { name: "lemon",   amount: "1, peeled and quartered" },
+      { name: "water",   amount: "1 cup" },
+    ],
+    instructions: [
+      "Add all ingredients to a juicer or high-speed blender.",
+      "Blend until smooth.",
+      "Pour over ice and serve immediately.",
+    ],
+  },
+
 ];
