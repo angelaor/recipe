@@ -987,6 +987,31 @@ html.text-lg { font-size: 22px; }
   .macro-fiber   { background: rgba(26,122,62,.18);  color: #5fd88a; }
 }
 
+/* ── Page View Counter ── */
+.view-counter {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 6px 14px 6px 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.10);
+  font-size: .78rem;
+  color: var(--text-muted);
+  z-index: 99;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+.view-counter-icon { font-size: .85rem; line-height: 1; }
+.view-counter-num  { font-weight: 700; color: var(--text); font-size: .82rem; }
+.view-counter-label { letter-spacing: .03em; }
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .nav { padding: 20px 20px; }

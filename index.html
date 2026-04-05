@@ -144,7 +144,34 @@
     </div>
   </div>
 
+  <!-- Page view counter badge -->
+  <div class="view-counter" id="view-counter" aria-label="Page views">
+    <span class="view-counter-icon">👁</span>
+    <span class="view-counter-num" id="view-count">—</span>
+    <span class="view-counter-label">views</span>
+  </div>
+
   <script src="js/recipes.js?v=4"></script>
   <script src="js/app.js?v=4"></script>
+  <script>
+    // Increment & display page views via free counter API, with localStorage fallback
+    (function () {
+      const LOCAL_KEY = "recipebox-views";
+
+      function showCount(n) {
+        const el = document.getElementById("view-count");
+        if (el) el.textContent = Number(n).toLocaleString();
+      }
+
+      // Always bump the local count too (offline fallback)
+      const local = parseInt(localStorage.getItem(LOCAL_KEY) || "0", 10) + 1;
+      localStorage.setItem(LOCAL_KEY, local);
+
+      fetch("https://api.counterapi.dev/v1/therecipebox-angela/pageviews/up")
+        .then(r => r.json())
+        .then(d => showCount(d.count ?? d.value ?? local))
+        .catch(() => showCount(local));
+    })();
+  </script>
 </body>
 </html>
