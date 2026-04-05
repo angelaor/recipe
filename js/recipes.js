@@ -2123,4 +2123,43 @@ const RECIPES = [
     ],
   },
 
+  {
+    id: "savory-greek-dutch-baby",
+    name: "Savory Greek Dutch Baby",
+    emoji: "🫒",
+    mealTypes: ["breakfast", "lunch"],
+    tags: ["eggs", "mediterranean", "vegetarian", "baked", "brunch", "quick"],
+    time: "25 min",
+    calories: 340,
+    nutrition: { protein: 14, carbs: 28, fat: 20, fiber: 2 },
+    servings: 3,
+    rating: 4.9,
+    description:
+      "Fluffy, golden, feta-studded and herb-perfumed — a savory spin on the Dutch Baby with cherry tomatoes, red onion, and a finish of fresh dill and lemon zest. Brunch goals.",
+    ingredients: [
+      { name: "egg",                 amount: "3 large" },
+      { name: "milk",                amount: "¾ cup" },
+      { name: "all-purpose flour",   amount: "¾ cup" },
+      { name: "olive oil",           amount: "1–2 tbsp (batter) + 2 tbsp (skillet)" },
+      { name: "dried oregano",       amount: "½ tsp (or 1 tsp fresh)" },
+      { name: "salt",                amount: "½ tsp" },
+      { name: "black pepper",        amount: "½ tsp" },
+      { name: "feta cheese",         amount: "½ cup, crumbled" },
+      { name: "cherry tomatoes",     amount: "½ cup, halved" },
+      { name: "red onion",           amount: "¼ cup, thinly sliced" },
+      { name: "kalamata olives",     amount: "¼ cup, sliced (optional)" },
+      { name: "fresh dill",          amount: "handful, for finishing" },
+      { name: "lemon",               amount: "zest of 1, for finishing" },
+    ],
+    instructions: [
+      "Place a 10–12 inch cast iron or oven-safe skillet in the oven and preheat to 425°F. Let it heat for at least 10 minutes — a screaming-hot pan is the secret to the puff.",
+      "Make the batter: whisk together eggs, milk, flour, olive oil, oregano, salt, and pepper until completely smooth. A blender works great here.",
+      "Carefully remove the hot skillet from the oven. Add 2 tbsp butter or olive oil and swirl to coat the entire surface.",
+      "Scatter feta, cherry tomatoes, red onion, and olives (if using) evenly across the skillet.",
+      "Pour the batter over the toppings and immediately return the skillet to the oven.",
+      "Bake 15–20 minutes until dramatically puffed and deeply golden at the edges. Do not open the oven during the first 12 minutes.",
+      "Remove from oven — it will settle slightly, which is normal. Finish with fresh dill, lemon zest, and a drizzle of olive oil. Serve straight from the skillet.",
+    ],
+  },
+
 ];
