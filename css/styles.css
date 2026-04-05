@@ -1008,7 +1008,6 @@ html.text-lg { font-size: 22px; }
   z-index: 99;
   pointer-events: auto;
   transition: opacity .3s;
-  position: relative;
 }
 .view-counter-icon  { font-size: .85rem; line-height: 1; }
 .view-counter-num   { font-weight: 700; color: var(--text); font-size: .82rem; }
