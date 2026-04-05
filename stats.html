@@ -8,514 +8,240 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #0f172a;
-      --surface:  #1e293b;
-      --surface2: #263148;
-      --border:   #334155;
-      --text:     #f1f5f9;
-      --muted:    #94a3b8;
-      --accent:   #f97316;
-      --green:    #22c55e;
-      --blue:     #3b82f6;
-      --purple:   #a855f7;
-      --red:      #f43f5e;
+      --bg:      #0f172a;
+      --surface: #1e293b;
+      --border:  #334155;
+      --text:    #f1f5f9;
+      --muted:   #94a3b8;
+      --accent:  #f97316;
     }
+
+    html, body { height: 100%; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
-      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* ── Header ── */
-    .header {
+    /* ── Top bar ── */
+    .topbar {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 1.1rem 2rem;
+      padding: 0.85rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+      flex-shrink: 0;
+      z-index: 10;
     }
-    .header-logo {
-      font-size: 1.15rem;
+    .topbar-logo {
+      font-size: 1.05rem;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
+      white-space: nowrap;
     }
-    .header-logo .accent { color: var(--accent); }
-    .header-right { display: flex; align-items: center; gap: 1rem; }
-    .gc-link, .back-link {
+    .topbar-logo .accent { color: var(--accent); }
+    .topbar-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-open {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .btn-open:hover { opacity: 0.85; }
+    .back-link {
       font-size: 0.82rem;
       color: var(--muted);
       text-decoration: none;
-      transition: color 0.2s;
+      white-space: nowrap;
     }
-    .gc-link:hover, .back-link:hover { color: var(--text); }
-    .last-updated {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
+    .back-link:hover { color: var(--text); }
 
-    /* ── Period bar ── */
-    .period-bar {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0.65rem 2rem;
+    /* ── Notice banner ── */
+    .notice {
+      background: #1c2a1a;
+      border-bottom: 1px solid #2d4a28;
+      color: #86efac;
+      font-size: 0.82rem;
+      padding: 0.6rem 1.5rem;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-shrink: 0;
       flex-wrap: wrap;
     }
-    .period-label { color: var(--muted); font-size: 0.82rem; margin-right: 0.25rem; }
-    .period-btn {
-      padding: 0.3rem 0.8rem;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 0.82rem;
-      transition: all 0.18s;
-    }
-    .period-btn:hover { border-color: var(--accent); color: var(--text); }
-    .period-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+    .notice strong { color: #bbf7d0; }
+    .notice a { color: #86efac; }
 
-    /* ── Main ── */
-    .main { padding: 1.75rem 2rem; max-width: 1200px; margin: 0 auto; }
-
-    /* ── Summary cards ── */
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.75rem;
-    }
-    .summary-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.35rem 1.5rem;
-    }
-    .summary-card .s-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
-    }
-    .summary-card .s-value {
-      font-size: 2.2rem;
-      font-weight: 700;
-      line-height: 1;
-      min-height: 2.4rem;
-      display: flex;
-      align-items: center;
-    }
-    .s-value.c-accent  { color: var(--accent); }
-    .s-value.c-green   { color: var(--green); }
-    .s-value.c-blue    { color: var(--blue); }
-    .s-value.c-purple  { color: var(--purple); }
-    .summary-card .s-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.35rem; }
-
-    /* ── Data grid ── */
-    .data-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.25rem;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .card-head {
-      padding: 0.9rem 1.25rem;
-      border-bottom: 1px solid var(--border);
-      font-weight: 600;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .card-body { padding: 0.25rem 0; min-height: 80px; }
-
-    /* ── Stat rows ── */
-    .stat-row {
-      display: flex;
-      align-items: center;
-      padding: 0.55rem 1.25rem;
-      gap: 0.75rem;
-      transition: background 0.15s;
-    }
-    .stat-row:hover { background: var(--surface2); }
-    .stat-lbl {
-      flex: 0 0 auto;
-      width: 160px;
-      font-size: 0.875rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .stat-bar-wrap {
+    /* ── Iframe ── */
+    .frame-wrap {
       flex: 1;
-      background: var(--border);
-      border-radius: 99px;
-      height: 5px;
-      overflow: hidden;
-    }
-    .stat-bar {
-      height: 100%;
-      border-radius: 99px;
-      transition: width 0.55s cubic-bezier(.4,0,.2,1);
-    }
-    .stat-num {
-      flex: 0 0 auto;
-      font-size: 0.82rem;
-      color: var(--muted);
-      min-width: 38px;
-      text-align: right;
-      font-variant-numeric: tabular-nums;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: 0;
     }
 
-    /* ── Spinner ── */
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .spinner {
-      width: 20px; height: 20px;
-      border: 2px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.65s linear infinite;
-      display: inline-block;
+    iframe#gc-frame {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: #fff;
     }
-    .loading {
-      display: flex;
+
+    /* ── Fallback (shown if iframe is blocked) ── */
+    .fallback {
+      display: none;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 0.6rem;
-      color: var(--muted);
-      font-size: 0.85rem;
-      padding: 1.5rem;
-    }
-    .error-msg {
-      color: var(--red);
+      gap: 1.5rem;
+      padding: 3rem 1.5rem;
       text-align: center;
-      padding: 1.25rem;
-      font-size: 0.85rem;
-      line-height: 1.5;
+      flex: 1;
     }
-    .empty-msg {
-      color: var(--muted);
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.85rem;
+    .fallback-icon { font-size: 3rem; }
+    .fallback h2 { font-size: 1.4rem; }
+    .fallback p  { color: var(--muted); font-size: 0.9rem; line-height: 1.6; max-width: 480px; }
+    .fallback-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: opacity 0.2s;
     }
+    .fallback-btn:hover { opacity: 0.85; }
+    .steps {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      max-width: 420px;
+      width: 100%;
+    }
+    .steps h3 { font-size: 0.9rem; color: var(--accent); margin-bottom: 0.75rem; }
+    .steps ol  { padding-left: 1.2rem; color: var(--muted); font-size: 0.85rem; line-height: 2; }
+    .steps ol li strong { color: var(--text); }
 
-    /* ── Footer ── */
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-
-    /* ── Responsive ── */
-    @media (max-width: 640px) {
-      .header { padding: 0.9rem 1rem; }
-      .period-bar { padding: 0.6rem 1rem; }
-      .main { padding: 1rem; }
-      .stat-lbl { width: 120px; }
+    @media (max-width: 600px) {
+      .topbar { padding: 0.75rem 1rem; }
+      .notice { padding: 0.6rem 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── Header ── -->
-  <header class="header">
-    <div class="header-logo">🍳 The Recipe <span class="accent">Box</span> &nbsp;·&nbsp; Analytics</div>
-    <div class="header-right">
-      <span class="last-updated" id="last-updated"></span>
-      <a class="gc-link" href="https://thekitchenbuddy.goatcounter.com" target="_blank">GoatCounter dashboard ↗</a>
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-logo">🍳 The Recipe <span class="accent">Box</span> &nbsp;·&nbsp; Analytics</div>
+    <div class="topbar-actions">
+      <a class="btn-open" href="https://thekitchenbuddy.goatcounter.com" target="_blank">
+        ↗ Open GoatCounter
+      </a>
       <a class="back-link" href="index.html">← Back to site</a>
     </div>
-  </header>
-
-  <!-- ── Period selector ── -->
-  <div class="period-bar">
-    <span class="period-label">Period:</span>
-    <button class="period-btn" data-days="7">Last 7 days</button>
-    <button class="period-btn active" data-days="30">Last 30 days</button>
-    <button class="period-btn" data-days="90">Last 90 days</button>
-    <button class="period-btn" data-days="0">All time</button>
   </div>
 
-  <!-- ── Main ── -->
-  <main class="main">
+  <!-- Tip banner -->
+  <div class="notice">
+    <span>
+      <strong>💡 Tip:</strong> If you see a login screen below, open GoatCounter first, log in, then come back here — the iframe will load automatically.
+      &nbsp;·&nbsp; To always see stats without logging in, go to
+      <a href="https://thekitchenbuddy.goatcounter.com/settings/main" target="_blank">GoatCounter Settings</a>
+      and enable <strong>"Allow anyone to view these statistics"</strong>.
+    </span>
+  </div>
 
-    <!-- Summary row -->
-    <div class="summary-grid">
-      <div class="summary-card">
-        <div class="s-label">📊 Total Pageviews</div>
-        <div class="s-value c-accent" id="total-views"><div class="spinner"></div></div>
-        <div class="s-sub" id="views-sub">&nbsp;</div>
-      </div>
-      <div class="summary-card">
-        <div class="s-label">👥 Unique Visitors</div>
-        <div class="s-value c-green" id="total-unique"><div class="spinner"></div></div>
-        <div class="s-sub" id="unique-sub">&nbsp;</div>
-      </div>
-      <div class="summary-card">
-        <div class="s-label">📍 Top Country</div>
-        <div class="s-value c-blue" id="top-country" style="font-size:1.6rem">…</div>
-        <div class="s-sub" id="country-sub">&nbsp;</div>
-      </div>
-      <div class="summary-card">
-        <div class="s-label">🌐 Top Browser</div>
-        <div class="s-value c-purple" id="top-browser" style="font-size:1.6rem">…</div>
-        <div class="s-sub" id="browser-sub">&nbsp;</div>
+  <!-- Iframe wrapper -->
+  <div class="frame-wrap" id="frame-wrap">
+
+    <iframe
+      id="gc-frame"
+      src="https://thekitchenbuddy.goatcounter.com"
+      title="GoatCounter Analytics Dashboard"
+      loading="lazy"
+      sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation">
+    </iframe>
+
+    <!-- Shown if iframe is blocked by X-Frame-Options -->
+    <div class="fallback" id="fallback">
+      <div class="fallback-icon">📊</div>
+      <h2>Open your Analytics Dashboard</h2>
+      <p>GoatCounter doesn't allow embedding in an iframe unless you enable public stats. Click the button below to open your full dashboard in a new tab.</p>
+      <a class="fallback-btn" href="https://thekitchenbuddy.goatcounter.com" target="_blank">
+        📊 Open Analytics Dashboard →
+      </a>
+      <div class="steps">
+        <h3>✨ Enable embedded view (optional)</h3>
+        <ol>
+          <li>Go to <strong>GoatCounter → Settings → Main</strong></li>
+          <li>Check <strong>"Allow anyone to view these statistics"</strong></li>
+          <li>Save — then reload this page</li>
+        </ol>
       </div>
     </div>
 
-    <!-- Detail cards -->
-    <div class="data-grid">
-
-      <div class="card">
-        <div class="card-head">📄 Top Pages</div>
-        <div class="card-body" id="pages-list"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">🌍 Top Countries</div>
-        <div class="card-body" id="countries-list"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">🌐 Browsers</div>
-        <div class="card-body" id="browsers-list"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">🔗 Referrers</div>
-        <div class="card-body" id="referrers-list"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">💻 Operating Systems</div>
-        <div class="card-body" id="systems-list"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-      </div>
-
-      <div class="card">
-        <div class="card-head">📱 Screen Sizes</div>
-        <div class="card-body" id="sizes-list"><div class="loading"><div class="spinner"></div>Loading…</div></div>
-      </div>
-
-    </div>
-  </main>
-
-  <footer>
-    Powered by <a href="https://www.goatcounter.com/" target="_blank">GoatCounter</a>
-    &nbsp;·&nbsp; Data refreshes on page load
-    &nbsp;·&nbsp; <a href="https://thekitchenbuddy.goatcounter.com" target="_blank">Full GoatCounter dashboard →</a>
-  </footer>
+  </div>
 
   <script>
-    const TOKEN = "wuhuigei2sn5b8jvhhtihwbspceqkwuhpt1u12bonf5afnzmo";
-    const BASE  = "https://thekitchenbuddy.goatcounter.com/api/v0/stats";
-    const HDR   = { "Authorization": "Bearer " + TOKEN };
+    // Detect if the iframe was blocked by X-Frame-Options.
+    // A blocked iframe still fires "load" but its contentDocument is inaccessible
+    // and usually has 0 height or triggers a security error.
+    const frame    = document.getElementById("gc-frame");
+    const fallback = document.getElementById("fallback");
 
-    let currentDays = 30;
-
-    // ── Country helpers ──
-    const COUNTRY = {
-      US:"United States",GB:"United Kingdom",CA:"Canada",AU:"Australia",
-      DE:"Germany",FR:"France",NL:"Netherlands",SE:"Sweden",NO:"Norway",
-      DK:"Denmark",FI:"Finland",CH:"Switzerland",AT:"Austria",BE:"Belgium",
-      IT:"Italy",ES:"Spain",PT:"Portugal",IE:"Ireland",NZ:"New Zealand",
-      JP:"Japan",KR:"South Korea",CN:"China",IN:"India",BR:"Brazil",
-      MX:"Mexico",AR:"Argentina",ZA:"South Africa",SG:"Singapore",
-      MY:"Malaysia",PH:"Philippines",TH:"Thailand",ID:"Indonesia",
-      TR:"Turkey",PL:"Poland",CZ:"Czechia",HU:"Hungary",RO:"Romania",
-      UA:"Ukraine",RU:"Russia",IL:"Israel",SA:"Saudi Arabia",AE:"UAE",
-      EG:"Egypt",NG:"Nigeria",KE:"Kenya",GH:"Ghana",PK:"Pakistan",
-      BD:"Bangladesh",VN:"Vietnam",TW:"Taiwan",HK:"Hong Kong",
-    };
-
-    function flag(code) {
-      if (!code || code.length !== 2) return "🌍";
-      return code.toUpperCase().split("").map(c =>
-        String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65)
-      ).join("");
-    }
-    function cname(code) { return COUNTRY[code] || code || "Unknown"; }
-
-    function fmtDate(d) { return d.toISOString().split("T")[0]; }
-
-    function dateRange(days) {
-      const end = new Date();
-      if (days === 0) return { start: "2020-01-01", end: fmtDate(end) };
-      const start = new Date(end);
-      start.setDate(start.getDate() - days);
-      return { start: fmtDate(start), end: fmtDate(end) };
-    }
-
-    function periodLabel(days) {
-      if (days === 0) return "all time";
-      return `last ${days} days`;
-    }
-
-    // ── Render a bar-chart list ──
-    function renderList(id, rows, color) {
-      const el = document.getElementById(id);
-      if (!rows || rows.length === 0) {
-        el.innerHTML = `<div class="empty-msg">No data for this period</div>`;
-        return;
-      }
-      const max = rows[0].count || 1;
-      el.innerHTML = rows.map(r => {
-        const pct = Math.round((r.count / max) * 100);
-        return `<div class="stat-row">
-          <div class="stat-lbl" title="${r.label}">${r.label}</div>
-          <div class="stat-bar-wrap">
-            <div class="stat-bar" style="width:${pct}%;background:${color}"></div>
-          </div>
-          <div class="stat-num">${r.count.toLocaleString()}</div>
-        </div>`;
-      }).join("");
-    }
-
-    function setSpinner(id) {
-      document.getElementById(id).innerHTML = `<div class="loading"><div class="spinner"></div>Loading…</div>`;
-    }
-
-    // ── Main fetch ──
-    async function loadStats(days) {
-      const { start, end } = dateRange(days);
-      const qs = `?start=${start}&end=${end}&limit=10`;
-
-      // Reset UI
-      ["pages-list","countries-list","browsers-list","referrers-list","systems-list","sizes-list"]
-        .forEach(setSpinner);
-      ["total-views","total-unique"].forEach(id => {
-        document.getElementById(id).innerHTML = `<div class="spinner"></div>`;
-      });
-      ["top-country","top-browser"].forEach(id => {
-        document.getElementById(id).textContent = "…";
-      });
-
-      const label = periodLabel(days);
-
+    frame.addEventListener("load", function () {
       try {
-        const [hits, locs, brs, refs, sys, sizes] = await Promise.all([
-          fetch(`${BASE}/hits${qs}`,      { headers: HDR }).then(r => r.json()),
-          fetch(`${BASE}/locations${qs}`, { headers: HDR }).then(r => r.json()),
-          fetch(`${BASE}/browsers${qs}`,  { headers: HDR }).then(r => r.json()),
-          fetch(`${BASE}/referrers${qs}`, { headers: HDR }).then(r => r.json()),
-          fetch(`${BASE}/systems${qs}`,   { headers: HDR }).then(r => r.json()),
-          fetch(`${BASE}/sizes${qs}`,     { headers: HDR }).then(r => r.json()),
-        ]);
-
-        // Summary cards
-        const totalViews = hits.total   ?? (hits.hits||[]).reduce((s,h)=>s+(h.count||0),0);
-        const totalUniq  = hits.total_unique ?? totalViews;
-
-        document.getElementById("total-views").textContent  = totalViews.toLocaleString();
-        document.getElementById("views-sub").textContent    = label;
-        document.getElementById("total-unique").textContent = totalUniq.toLocaleString();
-        document.getElementById("unique-sub").textContent   = label;
-
-        // Top country
-        const tl = (locs.locations || [])[0];
-        if (tl) {
-          document.getElementById("top-country").textContent = `${flag(tl.id)} ${tl.id}`;
-          document.getElementById("country-sub").textContent = `${tl.count.toLocaleString()} views`;
-        } else {
-          document.getElementById("top-country").textContent = "—";
-          document.getElementById("country-sub").textContent = "no data";
+        // If we can access contentDocument, it loaded (cross-origin won't throw here
+        // but document will be empty / title-less if blocked by X-Frame-Options).
+        const doc = frame.contentDocument || frame.contentWindow.document;
+        // If the frame was blocked, the document will be empty or have no title
+        if (!doc || !doc.title) {
+          frame.style.display = "none";
+          fallback.style.display = "flex";
         }
-
-        // Top browser
-        const tb = (brs.browsers || [])[0];
-        if (tb) {
-          document.getElementById("top-browser").textContent = tb.id || "—";
-          document.getElementById("browser-sub").textContent = `${tb.count.toLocaleString()} visits`;
-        } else {
-          document.getElementById("top-browser").textContent = "—";
-          document.getElementById("browser-sub").textContent = "no data";
-        }
-
-        // Pages list
-        renderList("pages-list",
-          (hits.hits || []).map(h => ({ label: h.title || h.path || "/", count: h.count })),
-          "var(--accent)"
-        );
-
-        // Countries list
-        renderList("countries-list",
-          (locs.locations || []).map(l => ({ label: `${flag(l.id)} ${cname(l.id)}`, count: l.count })),
-          "var(--blue)"
-        );
-
-        // Browsers
-        renderList("browsers-list",
-          (brs.browsers || []).map(b => ({ label: b.id || "Unknown", count: b.count })),
-          "var(--purple)"
-        );
-
-        // Referrers
-        const refArr = refs.referrers || refs.refs || refs.hits || [];
-        renderList("referrers-list",
-          refArr.map(r => ({ label: r.id || r.ref || "Direct / none", count: r.count })),
-          "var(--green)"
-        );
-
-        // Systems
-        const sysArr = sys.systems || sys.hits || [];
-        renderList("systems-list",
-          sysArr.map(s => ({ label: s.id || "Unknown", count: s.count })),
-          "var(--red)"
-        );
-
-        // Screen sizes
-        const sizeArr = sizes.sizes || sizes.hits || [];
-        renderList("sizes-list",
-          sizeArr.map(s => ({ label: s.id || "Unknown", count: s.count })),
-          "#06b6d4"
-        );
-
-        // Last updated
-        document.getElementById("last-updated").textContent =
-          "Updated " + new Date().toLocaleTimeString();
-
-      } catch (err) {
-        console.error("GoatCounter API error:", err);
-        ["pages-list","countries-list","browsers-list","referrers-list","systems-list","sizes-list"]
-          .forEach(id => {
-            document.getElementById(id).innerHTML =
-              `<div class="error-msg">⚠️ Failed to load.<br><small>${err.message}</small></div>`;
-          });
-        ["total-views","total-unique"].forEach(id => {
-          document.getElementById(id).textContent = "—";
-        });
+      } catch (e) {
+        // Security error = cross-origin blocked. Show fallback.
+        frame.style.display = "none";
+        fallback.style.display = "flex";
       }
-    }
-
-    // Period button wiring
-    document.querySelectorAll(".period-btn").forEach(btn => {
-      btn.addEventListener("click", function () {
-        document.querySelectorAll(".period-btn").forEach(b => b.classList.remove("active"));
-        this.classList.add("active");
-        currentDays = parseInt(this.dataset.days, 10);
-        loadStats(currentDays);
-      });
     });
 
-    // Boot
-    loadStats(currentDays);
+    // Timeout fallback — if nothing loads after 6 seconds, show the button
+    setTimeout(function () {
+      try {
+        const doc = frame.contentDocument || frame.contentWindow.document;
+        if (!doc || !doc.title) {
+          frame.style.display = "none";
+          fallback.style.display = "flex";
+        }
+      } catch (e) {
+        frame.style.display = "none";
+        fallback.style.display = "flex";
+      }
+    }, 6000);
   </script>
 
 </body>

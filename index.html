@@ -160,20 +160,27 @@
 
   <script>
     (function () {
-      const GC_TOKEN = "wuhuigei2sn5b8jvhhtihwbspceqkwuhpt1u12bonf5afnzmo";
-
-      // ── Page view counter badge (reads from GoatCounter API) ──
+      // ── Page view counter badge ──
+      // Uses GoatCounter's public /counter/ endpoint (no auth, CORS-friendly)
       function showCount(n) {
         const el = document.getElementById("view-count");
         if (el) el.textContent = Number(n).toLocaleString();
       }
 
-      fetch("https://thekitchenbuddy.goatcounter.com/api/v0/stats/hits?start=2020-01-01", {
-        headers: { "Authorization": "Bearer " + GC_TOKEN }
-      })
-        .then(r => r.json())
-        .then(d => showCount(d.total ?? "—"))
-        .catch(() => showCount("—"));
+      // Try two common path formats that GoatCounter may have recorded
+      const gcBase = "https://thekitchenbuddy.goatcounter.com/counter/";
+      const paths  = ["/recipe/", "/recipe/index.html", "/"];
+
+      (function tryNext(i) {
+        if (i >= paths.length) { showCount("—"); return; }
+        fetch(gcBase + encodeURIComponent(paths[i]) + ".json")
+          .then(r => r.ok ? r.json() : Promise.reject())
+          .then(d => {
+            if (d && d.count > 0) showCount(d.count);
+            else tryNext(i + 1);
+          })
+          .catch(() => tryNext(i + 1));
+      })(0);
 
       // ── Geolocation tooltip ──
       const tooltip = document.getElementById("view-tooltip");
