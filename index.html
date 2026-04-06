@@ -68,52 +68,79 @@
   <main class="app" id="app">
     <div class="container">
 
-      <!-- ── Ingredient Finder (shown only when triggered) ── -->
+      <!-- ── Mode Selector ── -->
+      <section class="mode-selector" id="mode-selector">
+        <p class="section-sub" style="text-align:center;padding-top:60px;font-size:1.1rem;color:var(--text-muted)">
+          How would you like to find a recipe?
+        </p>
+        <div class="mode-cards">
+
+          <div class="mode-card" id="card-ingredients">
+            <div class="mode-icon">🥕</div>
+            <h3>I have ingredients</h3>
+            <p>Tell us what's in your pantry and fridge — we'll match you with recipes that fit.</p>
+            <span class="arrow">Get started →</span>
+          </div>
+
+          <div class="mode-card" id="card-meal">
+            <div class="mode-icon">🍽️</div>
+            <h3>Browse by meal type</h3>
+            <p>Looking for something specific for breakfast, lunch, or dinner? Start here.</p>
+            <span class="arrow">Explore recipes →</span>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── Ingredient Finder ── -->
       <section class="finder hidden" id="ingredient-finder">
         <div class="section-header">
-          <button class="back-btn" id="back-from-ingredients">← Back to Recipes</button>
+          <button class="back-btn" id="back-from-ingredients">← Back</button>
           <h2>What's in your kitchen?</h2>
           <p>Select the ingredients you have on hand and we'll find matching recipes.</p>
         </div>
+
+        <!-- Chips injected here by app.js -->
         <div id="ingredient-grid"></div>
+
+        <!-- Results injected here -->
         <div class="results-header hidden" id="results-header"></div>
         <div class="recipe-grid" id="ingredient-results"></div>
       </section>
 
-      <!-- ── Meal Browser (always visible) ── -->
-      <section class="browser" id="meal-browser">
-
-        <!-- cookieandkate-style category nav -->
-        <nav class="cat-nav" id="meal-tabs">
-          <button class="meal-tab cat-nav-all active" data-meal="all">▶ ALL RECIPES</button>
-          <div class="cat-nav-divider"></div>
-          <span class="cat-nav-label">browse by category:</span>
-          <button class="meal-tab cat-nav-item" data-meal="breakfast">Breakfast</button>
-          <button class="meal-tab cat-nav-item" data-meal="lunch">Lunch</button>
-          <button class="meal-tab cat-nav-item" data-meal="dinner">Dinner</button>
-          <button class="meal-tab cat-nav-item" data-meal="dessert">Dessert</button>
-          <button class="meal-tab cat-nav-item" data-meal="juicing">Juicing</button>
-          <button class="cat-nav-fav" id="fav-btn">🤍 Favorites</button>
-        </nav>
-
-        <!-- Search bar -->
-        <div class="search-bar-row">
-          <div class="recipe-search-wrap">
-            <span class="recipe-search-icon">🔍</span>
-            <input
-              type="search"
-              id="recipe-search"
-              class="recipe-search"
-              placeholder='Search recipes… (e.g. "Braised Beef")'
-              autocomplete="off"
-              spellcheck="false"
-            />
-            <button class="recipe-search-clear hidden" id="recipe-search-clear" aria-label="Clear search">✕</button>
-          </div>
+      <!-- ── Meal Browser ── -->
+      <section class="browser hidden" id="meal-browser">
+        <div class="section-header">
+          <button class="back-btn" id="back-from-meals">← Back</button>
+          <h2>Browse by Meal Type</h2>
+          <p>Choose a meal setting to explore all matching recipes.</p>
         </div>
 
-        <!-- "The Latest" featured recipe -->
-        <div id="featured-recipe"></div>
+        <div class="meal-filter-bar">
+          <div class="meal-tabs" id="meal-tabs">
+            <button class="meal-tab active" data-meal="all">All recipes</button>
+            <button class="meal-tab" data-meal="breakfast">🌅 Breakfast</button>
+            <button class="meal-tab" data-meal="lunch">☀️ Lunch</button>
+            <button class="meal-tab" data-meal="dinner">🌙 Dinner</button>
+            <button class="meal-tab" data-meal="dessert">🍪 Dessert</button>
+            <button class="meal-tab" data-meal="juicing">🥤 Juicing</button>
+          </div>
+          <div class="meal-filter-right">
+            <div class="recipe-search-wrap">
+              <span class="recipe-search-icon">🔍</span>
+              <input
+                type="search"
+                id="recipe-search"
+                class="recipe-search"
+                placeholder="Search recipes…"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button class="recipe-search-clear hidden" id="recipe-search-clear" aria-label="Clear search">✕</button>
+            </div>
+            <button class="fav-btn" id="fav-btn" title="View your saved recipes">🤍 Favorites</button>
+          </div>
+        </div>
 
         <div class="recipe-grid" id="meal-results"></div>
       </section>

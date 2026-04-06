@@ -93,34 +93,45 @@ function matchScore(recipe) {
 }
 
 // ── Navigation & Mode Buttons ──
-// "Find by Ingredients" — hero + nav buttons open the ingredient finder
-function openIngredientFinder() {
-  currentMode = "ingredients";
-  hide($("meal-browser"));
-  show($("ingredient-finder"));
-  buildIngredientPicker();
+$("btn-ingredients").addEventListener("click", () => enterMode("ingredients"));
+$("btn-meal-type").addEventListener("click",   () => enterMode("meal"));
+$("nav-ingredients").addEventListener("click", () => {
+  enterMode("ingredients");
+  document.querySelector(".app").scrollIntoView({ behavior: "smooth" });
+});
+$("nav-meal").addEventListener("click", () => {
+  enterMode("meal");
+  document.querySelector(".app").scrollIntoView({ behavior: "smooth" });
+});
+$("card-ingredients").addEventListener("click", () => enterMode("ingredients"));
+$("card-meal").addEventListener("click",        () => enterMode("meal"));
+$("back-from-ingredients").addEventListener("click", leaveMode);
+$("back-from-meals").addEventListener("click",       leaveMode);
+
+// ── Mode switching ──
+function enterMode(mode) {
+  currentMode = mode;
+  hide($("mode-selector"));
+  if (mode === "ingredients") {
+    show($("ingredient-finder"));
+    hide($("meal-browser"));
+    buildIngredientPicker();
+  } else {
+    show($("meal-browser"));
+    hide($("ingredient-finder"));
+    updateFavBtn();
+    renderMealResults();
+  }
   $("app").scrollIntoView({ behavior: "smooth", block: "start" });
 }
-// "Browse by Meal" — scroll to the always-visible recipe section
-function scrollToBrowse() {
-  $("meal-browser").scrollIntoView({ behavior: "smooth", block: "start" });
-}
 
-$("btn-ingredients").addEventListener("click", openIngredientFinder);
-$("btn-meal-type").addEventListener("click",   scrollToBrowse);
-$("nav-ingredients").addEventListener("click", openIngredientFinder);
-$("nav-meal").addEventListener("click",        scrollToBrowse);
-
-$("back-from-ingredients").addEventListener("click", () => {
+function leaveMode() {
   currentMode = null;
   hide($("ingredient-finder"));
-  show($("meal-browser"));
-  $("meal-browser").scrollIntoView({ behavior: "smooth", block: "start" });
-});
-
-// ── Initialise meal browser on page load ──
-updateFavBtn();
-renderMealResults();
+  hide($("meal-browser"));
+  show($("mode-selector"));
+  $("app").scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 // ============================================================
 //  INGREDIENT PICKER — Two-Phase UX
@@ -394,66 +405,8 @@ $("fav-btn").addEventListener("click", () => {
   renderMealResults();
 });
 
-// ── Featured "The Latest" recipe ──
-function renderFeaturedRecipe() {
-  const el = document.getElementById("featured-recipe");
-  if (!el) return;
-
-  // Only show on "All" tab with no search and not in favorites mode
-  if (currentMealFilter !== "all" || currentSearchQuery || showingFavorites) {
-    el.innerHTML = "";
-    return;
-  }
-
-  const recipe     = RECIPES[RECIPES.length - 1];
-  const colorIndex = RECIPES.indexOf(recipe) % MODAL_GRADIENTS.length;
-  const isFav      = FAVS.has(recipe.id);
-  const mealLabel  = (recipe.mealTypes[0] || "recipe").toUpperCase();
-
-  const bgStyle = recipe.image
-    ? `background-image:url('images/${recipe.image}');background-size:cover;background-position:${recipe.imagePosition || "center center"}`
-    : `background:${MODAL_GRADIENTS[colorIndex]}`;
-
-  const emojiHTML = recipe.image ? "" : `<span class="latest-emoji">${recipe.emoji}</span>`;
-
-  el.innerHTML = `
-    <div class="latest-section">
-      <h2 class="latest-heading"><em>The Latest</em></h2>
-      <div class="latest-card" data-id="${recipe.id}">
-        <div class="latest-image" style="${bgStyle}">${emojiHTML}</div>
-        <div class="latest-overlay">
-          <div class="latest-category">${mealLabel}</div>
-          <div class="latest-name">${recipe.name}</div>
-          <div class="latest-desc">${recipe.description}</div>
-          <div class="latest-meta">⏱ ${recipe.time} &nbsp;·&nbsp; 🔥 ${recipe.calories} cal &nbsp;·&nbsp; ⭐ ${recipe.rating}</div>
-          <button class="card-heart latest-heart${isFav ? " active" : ""}" data-fav="${recipe.id}"
-            aria-label="${isFav ? "Remove from favorites" : "Save to favorites"}">${isFav ? "❤️" : "🤍"}</button>
-        </div>
-      </div>
-    </div>
-  `;
-
-  el.querySelector(".latest-card").addEventListener("click", e => {
-    if (!e.target.closest(".latest-heart")) openModal(recipe.id);
-  });
-  el.querySelector(".latest-heart").addEventListener("click", e => {
-    e.stopPropagation();
-    const btn = e.currentTarget;
-    const id  = btn.dataset.fav;
-    if (FAVS.has(id)) {
-      FAVS.delete(id); btn.classList.remove("active"); btn.innerHTML = "🤍";
-    } else {
-      FAVS.add(id); btn.classList.add("active"); btn.innerHTML = "❤️";
-      btn.classList.add("pop");
-      btn.addEventListener("animationend", () => btn.classList.remove("pop"), { once: true });
-    }
-    saveFavs(); updateFavBtn();
-  });
-}
-
 function renderMealResults() {
   const container = $("meal-results");
-  renderFeaturedRecipe();
 
   // Base list: favorites view or meal-type filter
   let filtered;
