@@ -93,45 +93,34 @@ function matchScore(recipe) {
 }
 
 // ── Navigation & Mode Buttons ──
-$("btn-ingredients").addEventListener("click", () => enterMode("ingredients"));
-$("btn-meal-type").addEventListener("click",   () => enterMode("meal"));
-$("nav-ingredients").addEventListener("click", () => {
-  enterMode("ingredients");
-  document.querySelector(".app").scrollIntoView({ behavior: "smooth" });
-});
-$("nav-meal").addEventListener("click", () => {
-  enterMode("meal");
-  document.querySelector(".app").scrollIntoView({ behavior: "smooth" });
-});
-$("card-ingredients").addEventListener("click", () => enterMode("ingredients"));
-$("card-meal").addEventListener("click",        () => enterMode("meal"));
-$("back-from-ingredients").addEventListener("click", leaveMode);
-$("back-from-meals").addEventListener("click",       leaveMode);
-
-// ── Mode switching ──
-function enterMode(mode) {
-  currentMode = mode;
-  hide($("mode-selector"));
-  if (mode === "ingredients") {
-    show($("ingredient-finder"));
-    hide($("meal-browser"));
-    buildIngredientPicker();
-  } else {
-    show($("meal-browser"));
-    hide($("ingredient-finder"));
-    updateFavBtn();
-    renderMealResults();
-  }
+// "Find by Ingredients" — hero + nav buttons open the ingredient finder
+function openIngredientFinder() {
+  currentMode = "ingredients";
+  hide($("meal-browser"));
+  show($("ingredient-finder"));
+  buildIngredientPicker();
   $("app").scrollIntoView({ behavior: "smooth", block: "start" });
 }
+// "Browse by Meal" — scroll to the always-visible recipe section
+function scrollToBrowse() {
+  $("meal-browser").scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
-function leaveMode() {
+$("btn-ingredients").addEventListener("click", openIngredientFinder);
+$("btn-meal-type").addEventListener("click",   scrollToBrowse);
+$("nav-ingredients").addEventListener("click", openIngredientFinder);
+$("nav-meal").addEventListener("click",        scrollToBrowse);
+
+$("back-from-ingredients").addEventListener("click", () => {
   currentMode = null;
   hide($("ingredient-finder"));
-  hide($("meal-browser"));
-  show($("mode-selector"));
-  $("app").scrollIntoView({ behavior: "smooth", block: "start" });
-}
+  show($("meal-browser"));
+  $("meal-browser").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+// ── Initialise meal browser on page load ──
+updateFavBtn();
+renderMealResults();
 
 // ============================================================
 //  INGREDIENT PICKER — Two-Phase UX
@@ -405,7 +394,7 @@ $("fav-btn").addEventListener("click", () => {
   renderMealResults();
 });
 
-// ── Featured latest recipe ──
+// ── Featured "The Latest" recipe ──
 function renderFeaturedRecipe() {
   const el = document.getElementById("featured-recipe");
   if (!el) return;
@@ -419,51 +408,46 @@ function renderFeaturedRecipe() {
   const recipe     = RECIPES[RECIPES.length - 1];
   const colorIndex = RECIPES.indexOf(recipe) % MODAL_GRADIENTS.length;
   const isFav      = FAVS.has(recipe.id);
+  const mealLabel  = (recipe.mealTypes[0] || "recipe").toUpperCase();
 
-  const visual = recipe.image
-    ? `<div class="featured-visual" style="background-image:url('images/${recipe.image}');background-size:cover;background-position:${recipe.imagePosition || 'center center'}"></div>`
-    : `<div class="featured-visual" style="background:${MODAL_GRADIENTS[colorIndex]}">
-        <span class="featured-emoji">${recipe.emoji}</span>
-       </div>`;
+  const bgStyle = recipe.image
+    ? `background-image:url('images/${recipe.image}');background-size:cover;background-position:${recipe.imagePosition || "center center"}`
+    : `background:${MODAL_GRADIENTS[colorIndex]}`;
+
+  const emojiHTML = recipe.image ? "" : `<span class="latest-emoji">${recipe.emoji}</span>`;
 
   el.innerHTML = `
-    <div class="featured-card" data-id="${recipe.id}">
-      ${visual}
-      <div class="featured-body">
-        <div class="featured-eyebrow">✨ Latest Addition</div>
-        <div class="featured-name">${recipe.name}</div>
-        <div class="featured-desc">${recipe.description}</div>
-        <div class="featured-meta">
-          <span>⏱ ${recipe.time}</span>
-          <span>🔥 ${recipe.calories} cal</span>
-          <span>👥 Serves ${recipe.servings}</span>
-          <span>⭐ ${recipe.rating}</span>
-        </div>
-        <div class="featured-actions">
-          <button class="featured-btn">View Recipe →</button>
-          <button class="card-heart featured-heart${isFav ? " active" : ""}" data-fav="${recipe.id}"
+    <div class="latest-section">
+      <h2 class="latest-heading"><em>The Latest</em></h2>
+      <div class="latest-card" data-id="${recipe.id}">
+        <div class="latest-image" style="${bgStyle}">${emojiHTML}</div>
+        <div class="latest-overlay">
+          <div class="latest-category">${mealLabel}</div>
+          <div class="latest-name">${recipe.name}</div>
+          <div class="latest-desc">${recipe.description}</div>
+          <div class="latest-meta">⏱ ${recipe.time} &nbsp;·&nbsp; 🔥 ${recipe.calories} cal &nbsp;·&nbsp; ⭐ ${recipe.rating}</div>
+          <button class="card-heart latest-heart${isFav ? " active" : ""}" data-fav="${recipe.id}"
             aria-label="${isFav ? "Remove from favorites" : "Save to favorites"}">${isFav ? "❤️" : "🤍"}</button>
         </div>
       </div>
     </div>
   `;
 
-  el.querySelector(".featured-card").addEventListener("click", e => {
-    if (!e.target.closest(".featured-heart")) openModal(recipe.id);
+  el.querySelector(".latest-card").addEventListener("click", e => {
+    if (!e.target.closest(".latest-heart")) openModal(recipe.id);
   });
-  el.querySelectorAll(".card-heart").forEach(btn => {
-    btn.addEventListener("click", e => {
-      e.stopPropagation();
-      const id = btn.dataset.fav;
-      if (FAVS.has(id)) {
-        FAVS.delete(id); btn.classList.remove("active"); btn.innerHTML = "🤍";
-      } else {
-        FAVS.add(id); btn.classList.add("active"); btn.innerHTML = "❤️";
-        btn.classList.add("pop");
-        btn.addEventListener("animationend", () => btn.classList.remove("pop"), { once: true });
-      }
-      saveFavs(); updateFavBtn();
-    });
+  el.querySelector(".latest-heart").addEventListener("click", e => {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const id  = btn.dataset.fav;
+    if (FAVS.has(id)) {
+      FAVS.delete(id); btn.classList.remove("active"); btn.innerHTML = "🤍";
+    } else {
+      FAVS.add(id); btn.classList.add("active"); btn.innerHTML = "❤️";
+      btn.classList.add("pop");
+      btn.addEventListener("animationend", () => btn.classList.remove("pop"), { once: true });
+    }
+    saveFavs(); updateFavBtn();
   });
 }
 
