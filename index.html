@@ -116,13 +116,27 @@
           <p>Choose a meal setting to explore all matching recipes.</p>
         </div>
 
-        <div class="meal-tabs" id="meal-tabs">
-          <button class="meal-tab active" data-meal="all">All recipes</button>
-          <button class="meal-tab" data-meal="breakfast">🌅 Breakfast</button>
-          <button class="meal-tab" data-meal="lunch">☀️ Lunch</button>
-          <button class="meal-tab" data-meal="dinner">🌙 Dinner</button>
-          <button class="meal-tab" data-meal="dessert">🍪 Dessert</button>
-          <button class="meal-tab" data-meal="juicing">🥤 Juicing</button>
+        <div class="meal-filter-bar">
+          <div class="meal-tabs" id="meal-tabs">
+            <button class="meal-tab active" data-meal="all">All recipes</button>
+            <button class="meal-tab" data-meal="breakfast">🌅 Breakfast</button>
+            <button class="meal-tab" data-meal="lunch">☀️ Lunch</button>
+            <button class="meal-tab" data-meal="dinner">🌙 Dinner</button>
+            <button class="meal-tab" data-meal="dessert">🍪 Dessert</button>
+            <button class="meal-tab" data-meal="juicing">🥤 Juicing</button>
+          </div>
+          <div class="recipe-search-wrap">
+            <span class="recipe-search-icon">🔍</span>
+            <input
+              type="search"
+              id="recipe-search"
+              class="recipe-search"
+              placeholder="Search recipes…"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button class="recipe-search-clear hidden" id="recipe-search-clear" aria-label="Clear search">✕</button>
+          </div>
         </div>
 
         <div class="recipe-grid" id="meal-results"></div>

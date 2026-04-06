@@ -343,6 +343,8 @@ function renderIngredientResults() {
 }
 
 // ── Meal tabs & results ──
+let currentSearchQuery = "";
+
 $("meal-tabs").addEventListener("click", e => {
   const tab = e.target.closest(".meal-tab");
   if (!tab) return;
@@ -352,18 +354,49 @@ $("meal-tabs").addEventListener("click", e => {
   renderMealResults();
 });
 
+// ── Search bar ──
+const searchInput = $("recipe-search");
+const searchClear = $("recipe-search-clear");
+
+searchInput.addEventListener("input", () => {
+  currentSearchQuery = searchInput.value.trim().toLowerCase();
+  searchClear.classList.toggle("hidden", currentSearchQuery === "");
+  renderMealResults();
+});
+
+searchClear.addEventListener("click", () => {
+  searchInput.value = "";
+  currentSearchQuery = "";
+  searchClear.classList.add("hidden");
+  searchInput.focus();
+  renderMealResults();
+});
+
 function renderMealResults() {
   const container = $("meal-results");
-  const filtered  = currentMealFilter === "all"
+
+  // First filter by meal type
+  let filtered = currentMealFilter === "all"
     ? RECIPES
     : RECIPES.filter(r => r.mealTypes.includes(currentMealFilter));
 
-  if (filtered.length === 0) {
-    container.innerHTML = noResultsHTML(
-      "🥣",
-      `No ${currentMealFilter} recipes yet`,
-      "More recipes are on the way — check back soon!"
+  // Then filter by search query (partial match on name, description, tags)
+  if (currentSearchQuery) {
+    filtered = filtered.filter(r =>
+      r.name.toLowerCase().includes(currentSearchQuery) ||
+      r.description.toLowerCase().includes(currentSearchQuery) ||
+      r.tags.some(t => t.toLowerCase().includes(currentSearchQuery))
     );
+  }
+
+  if (filtered.length === 0) {
+    const msg = currentSearchQuery
+      ? `No recipes matching "${searchInput.value}"`
+      : `No ${currentMealFilter} recipes yet`;
+    const sub = currentSearchQuery
+      ? "Try a different word or browse by meal type above."
+      : "More recipes are on the way — check back soon!";
+    container.innerHTML = noResultsHTML("🔍", msg, sub);
     return;
   }
 
