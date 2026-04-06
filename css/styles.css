@@ -607,6 +607,28 @@ body {
 }
 .modal-close:hover { background: var(--accent); color: #fff; }
 
+.modal-print {
+  position: sticky;
+  top: 16px;
+  float: right;
+  margin: 16px 60px 0 0;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: var(--transition);
+  z-index: 10;
+}
+.modal-print:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
 .modal-hero {
   height: 220px;
   display: flex;
@@ -1055,4 +1077,54 @@ html.text-lg { font-size: 22px; }
   .nav-links { display: none; }
   .font-sz-label { display: none; }
   .font-size-ctrl { padding: 5px 8px; }
+}
+
+/* ── Print styles ── */
+@media print {
+  /* Hide everything except the open recipe modal */
+  body > *:not(#modal-overlay) { display: none !important; }
+  #modal-overlay {
+    display: block !important;
+    position: static !important;
+    background: none !important;
+    overflow: visible !important;
+  }
+  .modal {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    animation: none !important;
+  }
+  /* Hide interactive controls */
+  .modal-close,
+  .modal-print,
+  .serving-selector,
+  .view-counter { display: none !important; }
+
+  /* Hero: keep photo if present, shrink height */
+  .modal-hero { height: 160px !important; }
+
+  /* Clean up body padding for paper */
+  .modal-body { padding: 16px 24px 24px !important; }
+
+  /* Recipe name */
+  .modal-name { font-size: 1.6rem !important; }
+
+  /* Show ingredients in a single column */
+  .ingredients-list { grid-template-columns: 1fr 1fr !important; }
+
+  /* Nutrition panel: full width */
+  .nutrition-panel { break-inside: avoid; }
+
+  /* Keep instructions together if possible */
+  .instructions-list li { break-inside: avoid; }
+
+  /* Tags, meta */
+  .modal-tags { margin-bottom: 6px !important; }
+
+  /* Page setup */
+  @page { margin: 1.5cm; }
 }
