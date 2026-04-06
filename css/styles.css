@@ -413,22 +413,158 @@ body {
   color: var(--text-muted);
 }
 
-/* ── Meal Filter Bar (tabs + search + favorites) ── */
-.meal-filter-bar {
+/* ── Category Strip ── */
+.category-strip {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 36px;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 28px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.category-strip::-webkit-scrollbar { display: none; }
 
-.meal-filter-right {
+.cat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 16px 24px;
+  border-radius: 18px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: inherit;
+  transition: all 0.2s cubic-bezier(.4,0,.2,1);
+  box-shadow: var(--shadow-sm);
+}
+.cat-icon { font-size: 1.9rem; line-height: 1; }
+.cat-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.cat-pill:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.cat-pill:hover .cat-name { color: var(--accent); }
+.cat-pill.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 4px 16px rgba(0,114,178,.25);
+  transform: translateY(-2px);
+}
+.cat-pill.active .cat-name { color: #fff; }
+
+/* ── Search + Favorites bar ── */
+.search-fav-bar {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 10px;
-  flex-shrink: 0;
+  margin-bottom: 32px;
   flex-wrap: wrap;
+}
+
+/* ── Featured Latest Recipe ── */
+.featured-card {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 44px;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s;
+}
+.featured-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.featured-visual {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+}
+.featured-emoji { font-size: 8rem; filter: drop-shadow(0 4px 16px rgba(0,0,0,.4)); }
+
+.featured-body {
+  padding: 40px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+.featured-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+.featured-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text);
+}
+.featured-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 480px;
+}
+.featured-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.featured-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+.featured-btn {
+  padding: 11px 28px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 99px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.featured-btn:hover { background: var(--accent-dk); }
+.featured-heart {
+  position: static !important;
+  width: 40px !important;
+  height: 40px !important;
+  border: 1.5px solid var(--border) !important;
+  background: var(--surface) !important;
+  font-size: 1.1rem !important;
+}
+
+@media (max-width: 760px) {
+  .featured-card { grid-template-columns: 1fr; }
+  .featured-visual { min-height: 200px; }
+  .featured-body { padding: 28px 24px; }
+  .featured-name { font-size: 1.5rem; }
 }
 
 /* ── Favorites button ── */
@@ -544,7 +680,7 @@ body {
 .recipe-search-clear:hover { color: var(--accent); }
 .recipe-search-clear.hidden { display: none; }
 
-/* ── Meal Tabs ── */
+/* ── Meal Tabs (legacy fallback) ── */
 .meal-tabs {
   display: flex;
   gap: 8px;

@@ -405,8 +405,71 @@ $("fav-btn").addEventListener("click", () => {
   renderMealResults();
 });
 
+// ── Featured latest recipe ──
+function renderFeaturedRecipe() {
+  const el = document.getElementById("featured-recipe");
+  if (!el) return;
+
+  // Only show on "All" tab with no search and not in favorites mode
+  if (currentMealFilter !== "all" || currentSearchQuery || showingFavorites) {
+    el.innerHTML = "";
+    return;
+  }
+
+  const recipe     = RECIPES[RECIPES.length - 1];
+  const colorIndex = RECIPES.indexOf(recipe) % MODAL_GRADIENTS.length;
+  const isFav      = FAVS.has(recipe.id);
+
+  const visual = recipe.image
+    ? `<div class="featured-visual" style="background-image:url('images/${recipe.image}');background-size:cover;background-position:${recipe.imagePosition || 'center center'}"></div>`
+    : `<div class="featured-visual" style="background:${MODAL_GRADIENTS[colorIndex]}">
+        <span class="featured-emoji">${recipe.emoji}</span>
+       </div>`;
+
+  el.innerHTML = `
+    <div class="featured-card" data-id="${recipe.id}">
+      ${visual}
+      <div class="featured-body">
+        <div class="featured-eyebrow">✨ Latest Addition</div>
+        <div class="featured-name">${recipe.name}</div>
+        <div class="featured-desc">${recipe.description}</div>
+        <div class="featured-meta">
+          <span>⏱ ${recipe.time}</span>
+          <span>🔥 ${recipe.calories} cal</span>
+          <span>👥 Serves ${recipe.servings}</span>
+          <span>⭐ ${recipe.rating}</span>
+        </div>
+        <div class="featured-actions">
+          <button class="featured-btn">View Recipe →</button>
+          <button class="card-heart featured-heart${isFav ? " active" : ""}" data-fav="${recipe.id}"
+            aria-label="${isFav ? "Remove from favorites" : "Save to favorites"}">${isFav ? "❤️" : "🤍"}</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  el.querySelector(".featured-card").addEventListener("click", e => {
+    if (!e.target.closest(".featured-heart")) openModal(recipe.id);
+  });
+  el.querySelectorAll(".card-heart").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const id = btn.dataset.fav;
+      if (FAVS.has(id)) {
+        FAVS.delete(id); btn.classList.remove("active"); btn.innerHTML = "🤍";
+      } else {
+        FAVS.add(id); btn.classList.add("active"); btn.innerHTML = "❤️";
+        btn.classList.add("pop");
+        btn.addEventListener("animationend", () => btn.classList.remove("pop"), { once: true });
+      }
+      saveFavs(); updateFavBtn();
+    });
+  });
+}
+
 function renderMealResults() {
   const container = $("meal-results");
+  renderFeaturedRecipe();
 
   // Base list: favorites view or meal-type filter
   let filtered;
