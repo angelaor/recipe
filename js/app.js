@@ -8,6 +8,28 @@ let selectedMainKey     = null;
 let currentMealFilter   = "all";
 let currentMode         = null;
 
+// ── Favorites ──
+const FAV_KEY       = "recipebox-favorites";
+let FAVS            = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
+let showingFavorites = false;
+
+function saveFavs() {
+  localStorage.setItem(FAV_KEY, JSON.stringify([...FAVS]));
+}
+
+function updateFavBtn() {
+  const btn = $("fav-btn");
+  if (!btn) return;
+  const count = FAVS.size;
+  if (count > 0) {
+    btn.innerHTML = `❤️ Favorites <span class="fav-count">${count}</span>`;
+  } else {
+    btn.innerHTML = `🤍 Favorites`;
+  }
+  btn.classList.toggle("active", showingFavorites);
+  btn.classList.toggle("has-favs", count > 0);
+}
+
 // ── Main Ingredient Tiles ──
 // ingKeys must match normalised ingredient names used in recipes.js
 const MAINS = [
@@ -97,6 +119,7 @@ function enterMode(mode) {
   } else {
     show($("meal-browser"));
     hide($("ingredient-finder"));
+    updateFavBtn();
     renderMealResults();
   }
   $("app").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -349,8 +372,10 @@ $("meal-tabs").addEventListener("click", e => {
   const tab = e.target.closest(".meal-tab");
   if (!tab) return;
   currentMealFilter = tab.dataset.meal;
+  showingFavorites  = false;
   document.querySelectorAll(".meal-tab").forEach(t => t.classList.remove("active"));
   tab.classList.add("active");
+  updateFavBtn();
   renderMealResults();
 });
 
@@ -372,15 +397,28 @@ searchClear.addEventListener("click", () => {
   renderMealResults();
 });
 
+// ── Favorites button ──
+$("fav-btn").addEventListener("click", () => {
+  if (FAVS.size === 0) return;
+  showingFavorites = !showingFavorites;
+  updateFavBtn();
+  renderMealResults();
+});
+
 function renderMealResults() {
   const container = $("meal-results");
 
-  // First filter by meal type
-  let filtered = currentMealFilter === "all"
-    ? RECIPES
-    : RECIPES.filter(r => r.mealTypes.includes(currentMealFilter));
+  // Base list: favorites view or meal-type filter
+  let filtered;
+  if (showingFavorites) {
+    filtered = RECIPES.filter(r => FAVS.has(r.id));
+  } else {
+    filtered = currentMealFilter === "all"
+      ? RECIPES
+      : RECIPES.filter(r => r.mealTypes.includes(currentMealFilter));
+  }
 
-  // Then filter by search query (partial match on name, description, tags)
+  // Narrow by search query (partial match on name, description, tags)
   if (currentSearchQuery) {
     filtered = filtered.filter(r =>
       r.name.toLowerCase().includes(currentSearchQuery) ||
@@ -390,13 +428,21 @@ function renderMealResults() {
   }
 
   if (filtered.length === 0) {
-    const msg = currentSearchQuery
-      ? `No recipes matching "${searchInput.value}"`
-      : `No ${currentMealFilter} recipes yet`;
-    const sub = currentSearchQuery
-      ? "Try a different word or browse by meal type above."
-      : "More recipes are on the way — check back soon!";
-    container.innerHTML = noResultsHTML("🔍", msg, sub);
+    let icon, msg, sub;
+    if (showingFavorites && currentSearchQuery) {
+      icon = "❤️"; msg = `No favorites match "${searchInput.value}"`;
+      sub  = "Try clearing the search to see all your saved recipes.";
+    } else if (showingFavorites) {
+      icon = "🤍"; msg = "No favorites saved yet";
+      sub  = "Tap the 🤍 on any recipe card to save it here!";
+    } else if (currentSearchQuery) {
+      icon = "🔍"; msg = `No recipes matching "${searchInput.value}"`;
+      sub  = "Try a different word or browse by meal type above.";
+    } else {
+      icon = "🥣"; msg = `No ${currentMealFilter} recipes yet`;
+      sub  = "More recipes are on the way — check back soon!";
+    }
+    container.innerHTML = noResultsHTML(icon, msg, sub);
     return;
   }
 
@@ -412,14 +458,19 @@ function recipeCardHTML(recipe, score) {
     ? `<div class="match-badge ${score >= 70 ? "high" : score >= 40 ? "mid" : ""}">${score}% match</div>`
     : "";
 
+  const isFav = FAVS.has(recipe.id);
+  const heartBtn = `<button class="card-heart${isFav ? " active" : ""}" data-fav="${recipe.id}" aria-label="${isFav ? "Remove from favorites" : "Save to favorites"}" title="${isFav ? "Remove from favorites" : "Save to favorites"}">${isFav ? "❤️" : "🤍"}</button>`;
+
   const imgPos = recipe.imagePosition || "center center";
   const cardVisual = recipe.image
     ? `<div class="card-visual card-photo" style="background-image:url('images/${recipe.image}');background-size:cover;background-position:${imgPos};">
         ${badge}
+        ${heartBtn}
        </div>`
     : `<div class="card-visual color-${colorIndex}">
         ${badge}
         <span class="card-emoji">${recipe.emoji}</span>
+        ${heartBtn}
        </div>`;
 
   return `
@@ -445,6 +496,30 @@ function recipeCardHTML(recipe, score) {
 function attachCardEvents(container) {
   container.querySelectorAll(".recipe-card").forEach(card => {
     card.addEventListener("click", () => openModal(card.dataset.id));
+  });
+  container.querySelectorAll(".card-heart").forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const id = btn.dataset.fav;
+      if (FAVS.has(id)) {
+        FAVS.delete(id);
+        btn.classList.remove("active");
+        btn.innerHTML = "🤍";
+        btn.title = btn.setAttribute("aria-label", "Save to favorites") || "Save to favorites";
+      } else {
+        FAVS.add(id);
+        btn.classList.add("active");
+        btn.innerHTML = "❤️";
+        btn.setAttribute("aria-label", "Remove from favorites");
+        btn.title = "Remove from favorites";
+        // Pop animation
+        btn.classList.add("pop");
+        btn.addEventListener("animationend", () => btn.classList.remove("pop"), { once: true });
+      }
+      saveFavs();
+      updateFavBtn();
+      if (showingFavorites) renderMealResults();
+    });
   });
 }
 

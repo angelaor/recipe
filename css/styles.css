@@ -413,7 +413,7 @@ body {
   color: var(--text-muted);
 }
 
-/* ── Meal Filter Bar (tabs + search) ── */
+/* ── Meal Filter Bar (tabs + search + favorites) ── */
 .meal-filter-bar {
   display: flex;
   align-items: flex-start;
@@ -422,6 +422,80 @@ body {
   flex-wrap: wrap;
   margin-bottom: 36px;
 }
+
+.meal-filter-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+/* ── Favorites button ── */
+.fav-btn {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.fav-btn.has-favs { color: var(--text); border-color: #e88ea0; }
+.fav-btn.active   { background: #fff0f3; border-color: #e05575; color: #c0314f; }
+.fav-btn:hover:not(.active) { border-color: #e88ea0; color: var(--text); }
+.fav-count {
+  background: #e05575;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 99px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Heart button on recipe cards ── */
+.card-heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, background 0.2s;
+  z-index: 3;
+  flex-shrink: 0;
+}
+.card-heart:hover { transform: scale(1.15); background: #fff; }
+.card-heart.active { background: #fff; }
+
+@keyframes heartPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.4); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+.card-heart.pop { animation: heartPop 0.35s ease forwards; }
 
 .recipe-search-wrap {
   position: relative;
@@ -521,6 +595,7 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 5rem;
+  position: relative;
   position: relative;
   overflow: hidden;
 }
